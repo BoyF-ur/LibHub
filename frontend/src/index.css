@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Kumbh+Sans:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,4 +15,12 @@
     background-color: #fdfeff;
     overflow-x: hidden;
   }
+}
+/* ct: custom.  */
+.ct-top-menu-item {
+  @apply cursor-pointer py-1 transition-colors hover:text-pornhub-200 relative after:transition-all after:absolute after:bottom-0 after:left-0 after:bg-orange-300 after:h-0.5 after:w-0 hover:after:w-full after:ease-in-out  after:duration-500;
+}
+
+.ct-top-menu-expand {
+  @apply absolute top-10 z-50 w-full text-center bg-white animate-slideDown;
 }
