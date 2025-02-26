@@ -4,6 +4,7 @@ import React from "react";
 import Login from "./pages/Auth/Login"
 import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/Home/Home";
+import Category from "./pages/Category/category";
 
 const App = () => {
     return(
@@ -14,6 +15,7 @@ const App = () => {
               <Route path="/login" exact element={<Login/>} />
               <Route path="/signup" exact element={<SignUp/>} />
               <Route path="/home" exact element={<Home/>} />
+              <Route path="/category" exact element={<Category/>} />
             </Routes>
           </Router>
         </div>
