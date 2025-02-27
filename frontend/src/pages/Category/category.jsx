@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import './styles.css';
+import "./styles.css";
 
 const Category = () => {
   return (
@@ -92,6 +92,65 @@ const Category = () => {
                 </div>
               </div>
             </div>
+            <div className="inner-wrap">
+              <div className="list-book flex flex-row justify-between">
+                <div className="box flex flex-col ">
+                  <img
+                    src="./assets/images/pic.PNG"
+                    alt="A book"
+                    className="basis-3/4"
+                  />
+                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
+                    <p className="text-black">Book 2</p>
+                    <span className="text-white-1">22nd Feb 2025</span>
+                  </div>
+                </div>
+                <div className="box flex flex-col ">
+                  <img
+                    src="./assets/images/pic.PNG"
+                    alt="A book"
+                    className="basis-3/4"
+                  />
+                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
+                    <p className="text-black">Book 2</p>
+                    <span className="text-white-1">22nd Feb 2025</span>
+                  </div>
+                </div>
+                <div className="box flex flex-col ">
+                  <img
+                    src="./assets/images/pic.PNG"
+                    alt="A book"
+                    className="basis-3/4"
+                  />
+                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
+                    <p className="text-black">Book 2</p>
+                    <span className="text-white-1">22nd Feb 2025</span>
+                  </div>
+                </div>
+                <div className="box flex flex-col ">
+                  <img
+                    src="./assets/images/pic.PNG"
+                    alt="A book"
+                    className="basis-3/4"
+                  />
+                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
+                    <p className="text-black">Book 2</p>
+                    <span className="text-white-1">22nd Feb 2025</span>
+                  </div>
+                </div>
+                <div className="box flex flex-col ">
+                  <img
+                    src="./assets/images/pic.PNG"
+                    alt="A book"
+                    className="basis-3/4"
+                  />
+                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
+                    <p className="text-black">Book 2</p>
+                    <span className="text-white-1">22nd Feb 2025</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -101,4 +160,4 @@ const Category = () => {
   );
 };
 
-export default Category
+export default Category;
