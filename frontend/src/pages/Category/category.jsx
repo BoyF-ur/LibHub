@@ -96,7 +96,7 @@ const Category = () => {
               <div className="list-book flex flex-row justify-between">
                 <div className="box flex flex-col ">
                   <img
-                    src="./assets/images/pic.PNG"
+                    src="../../assets/images/pic.PNG"
                     alt="A book"
                     className="basis-3/4"
                   />
@@ -107,7 +107,7 @@ const Category = () => {
                 </div>
                 <div className="box flex flex-col ">
                   <img
-                    src="./assets/images/pic.PNG"
+                    src="../../assets/images/pic.PNG"
                     alt="A book"
                     className="basis-3/4"
                   />
@@ -118,7 +118,7 @@ const Category = () => {
                 </div>
                 <div className="box flex flex-col ">
                   <img
-                    src="./assets/images/pic.PNG"
+                    src="../../assets/images/pic.PNG"
                     alt="A book"
                     className="basis-3/4"
                   />
@@ -129,7 +129,7 @@ const Category = () => {
                 </div>
                 <div className="box flex flex-col ">
                   <img
-                    src="./assets/images/pic.PNG"
+                    src="../../assets/images/pic.PNG"
                     alt="A book"
                     className="basis-3/4"
                   />
@@ -140,7 +140,7 @@ const Category = () => {
                 </div>
                 <div className="box flex flex-col ">
                   <img
-                    src="./assets/images/pic.PNG"
+                    src="../../assets/images/pic.PNG"
                     alt="A book"
                     className="basis-3/4"
                   />
