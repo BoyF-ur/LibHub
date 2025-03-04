@@ -1,68 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import "./styles.css";
+import BookBox from "../../components/BookBox";
+import axios from "axios";
+import Filter from "../../components/Filter/Filter";
+import Pagination from "../../components/Pagination";
 
 const Category = () => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [filters, setFilters] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10;
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/categories");
+      setCategories(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  const fetchFilters = async () => {
+    try {
+      const response = await axios.get("http://localhost:3002/filter");
+      setFilters(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+    fetchFilters();
+    setLoading(false);
+  }, []);
+
   return (
     <>
       <Header />
       <main id="main">
         <div className="inner-wrap flex flex-row justify-center box-border pb-0">
-          <div className="inner-filter block basis-1/4 max-w-[25%] relative col-auto border-list rounded-filter pl-4 pr-4 pb-8">
+          <div className="inner-filter block basis-1/4 max-w-[25%] relative col-auto border-list rounded-filter pl-4 pr-4 pb-8 mt-5 mb-10">
             <div className="main-filter">
               <h4 className="pt-4 pl-4 pr-4 pb-0 text-[var(--color-text)] items-center ">
                 <span className="text-2xl">Category</span>
               </h4>
               <div className="list-wrapper p-4 block ">
                 <ul className="list flex flex-col list-none m-0 p-0 border-none line-inherit">
-                  <li className="">
-                    <div className="filter-option">
-                      <input
-                        type="radio"
-                        id="all"
-                        name="category"
-                        defaultChecked=""
-                      />
-                      <label htmlFor="all">Tất cả</label>
-                    </div>
-                  </li>
-                  <li className="">
-                    <div className="filter-option">
-                      <input type="radio" id="id-1" name="category" />
-                      <label htmlFor="id-1">######</label>
-                    </div>
-                  </li>
-                  <li className="">
-                    <div className="filter-option">
-                      <input type="radio" id="id-2" name="category" />
-                      <label htmlFor="id-2">######</label>
-                    </div>
-                  </li>
-                  <li className="">
-                    <div className="filter-option">
-                      <input type="radio" id="id-3" name="category" />
-                      <label htmlFor="id-3">######</label>
-                    </div>
-                  </li>
-                  <li className="">
-                    <div className="filter-option">
-                      <input type="radio" id="id-4" name="category" />
-                      <label htmlFor="id-4">######</label>
-                    </div>
-                  </li>
-                  <li className="">
-                    <div className="filter-option">
-                      <input type="radio" id="id-5" name="category" />
-                      <label htmlFor="id-5">#####$</label>
-                    </div>
-                  </li>
-                  <li className="">
-                    <div className="filter-option">
-                      <input type="radio" id="id-6" name="category" />
-                      <label htmlFor="id-6">#######</label>
-                    </div>
-                  </li>
+                  {filters.map((filter) => (
+                    <Filter
+                      id={filter.id}
+                      title={filter.title}
+                      selectedCategory={selectedCategory} // Truyền state vào component Filter
+                      setSelectedCategory={setSelectedCategory}
+                    />
+                  ))}
                 </ul>
               </div>
             </div>
@@ -92,66 +93,38 @@ const Category = () => {
                 </div>
               </div>
             </div>
-            <div className="inner-wrap">
-              <div className="list-book flex flex-row justify-between">
-                <div className="box flex flex-col ">
-                  <img
-                    src="../../assets/images/pic.PNG"
-                    alt="A book"
-                    className="basis-3/4"
+
+            <div className="inner-wrap c-container">
+              <div className="list-book-1 flex flex-row justify-between flex-wrap ">
+                {categories.map((category) => (
+                  <BookBox
+                    key={category.id}
+                    title={category.title}
+                    description={category.description}
+                    imgUrl={category.imageUrl}
                   />
-                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
-                    <p className="text-black">Book 2</p>
-                    <span className="text-white-1">22nd Feb 2025</span>
-                  </div>
-                </div>
-                <div className="box flex flex-col ">
-                  <img
-                    src="../../assets/images/pic.PNG"
-                    alt="A book"
-                    className="basis-3/4"
+                ))}
+              </div>
+
+              <div className="list-book-2 flex flex-row justify-between flex-wrap ">
+                {categories.map((category) => (
+                  <BookBox
+                    key={category.id}
+                    title={category.title}
+                    description={category.description}
+                    imgUrl={category.imageUrl}
                   />
-                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
-                    <p className="text-black">Book 2</p>
-                    <span className="text-white-1">22nd Feb 2025</span>
-                  </div>
-                </div>
-                <div className="box flex flex-col ">
-                  <img
-                    src="../../assets/images/pic.PNG"
-                    alt="A book"
-                    className="basis-3/4"
-                  />
-                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
-                    <p className="text-black">Book 2</p>
-                    <span className="text-white-1">22nd Feb 2025</span>
-                  </div>
-                </div>
-                <div className="box flex flex-col ">
-                  <img
-                    src="../../assets/images/pic.PNG"
-                    alt="A book"
-                    className="basis-3/4"
-                  />
-                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
-                    <p className="text-black">Book 2</p>
-                    <span className="text-white-1">22nd Feb 2025</span>
-                  </div>
-                </div>
-                <div className="box flex flex-col ">
-                  <img
-                    src="../../assets/images/pic.PNG"
-                    alt="A book"
-                    className="basis-3/4"
-                  />
-                  <div className="basis-1/4 bg-amber-50 flex flex-col p-5">
-                    <p className="text-black">Book 2</p>
-                    <span className="text-white-1">22nd Feb 2025</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </main>
 
