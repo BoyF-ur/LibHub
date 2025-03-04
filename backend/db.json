@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "title": "Book 1",
+      "description": "Description",
+      "imageUrl": "../../../public/pic.PNG"
+    },
+    {
+      "id": "2",
+      "title": "Book 2",
+      "description": "Description",
+      "imageUrl": "../../../public/pic.PNG"
+    },
+    {
+      "id": "3",
+      "title": "Book 3",
+      "description": "Description",
+      "imageUrl": "../../../public/pic.PNG"
+    },
+    {
+      "id": "4",
+      "title": "Book 4",
+      "description": "Description",
+      "imageUrl": "../../../public/pic.PNG"
+    },
+    {
+      "id": "5",
+      "title": "Book 5",
+      "description": "Description",
+      "imageUrl": "../../../public/pic.PNG"
+    }
+  ]
+}
