@@ -1,30 +1,97 @@
-import React, { useState } from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import React, { useEffect, useState } from "react";
+import Footer from "../../components/layouts/Footer";
+import { Navigate, useNavigate } from "react-router-dom"
+import axiosInstance from "../../utils/axiosInstance";
+import Navbar from "../../components/layouts/Header";
+import TextToggle from "../../components/TextToggle";
+import CardSlider from "../../components/CardSlider";
+
+
 const Home = () =>{
+
+    // get Inforamation user
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState(null);
+
+    const getUserInfo = async () => {
+      try{
+        const response = await axiosInstance.get("/get-user");
+        if(response.data && response.data.user) {
+            setUserInfo(response.data.user);
+        }
+      } catch(error) {
+          if (error.response.status === 401) {
+              localStorage.clear();
+              navigate("/home");
+          }
+        }
+      };
+
+      //scroll 
+      const scrollToFooter = () => {
+        const footer = document.getElementById("footer");
+        footer.scrollIntoView({behavior: "smooth"});
+      }
+
+      const scrollToAbout = () => {
+        const about = document.getElementById("about");
+        about.scrollIntoView({behavior: "smooth"});
+      }
+      
+    useEffect(() => {
+      getUserInfo();  
+      return () => {   
+      };
+      }, []);
+      
     return(
         <>
-            <Header />
-            
-            <main>
-                <div className="relative flex flex-col items-center text-black text-center px-4 h-screen">
-                    <fieldset className="w-full max-w-3xl items-center my-52 mx-auto">  
-                        <h1 className="text-3xl font-bold mb-8">What book are you looking for?</h1>
-                        {/* Search-bar */}
-                        <div className="input-field relative w-full">
-                            <button className="icon-search absolute top-1/2 -translate-y-1/2 flex justify-center items-center h-full w-16 hover:text-pornhub-200 hover:transition-colors ">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                </svg>        
-                            </button>
-                            <input type="text" placeholder="Tittle book, author, ISBN, ..." className="w-full h-[70px] p-8 pl-16 rounded-full text-black focus:outline-none bg-gray-200 font-NunitoSans" />
+          <div className="content-wrapper font-NunitoSans">
+            <header>
+                  <Navbar userInfo={userInfo} scrollToFooter={scrollToFooter}/>
+              </header>
+      
+              <main className="">
+                <div className="">
+                  Game
+                </div> {/*End game*/}
 
-                        </div>
-                    </fieldset>                    
-                </div>                    
-            </main> {/*End Body*/}
+                <div className="bg-gray-100 h-auto">
+                  <div className="p-5">
+                      <div className="ct-subheadline ">
+                        What is the <span className="text-pornhub-200 ml-2 mr-2">Libhub</span> product?
+                      </div>
+                    <div className="flex items-center justify-center font-medium">
+                      <TextToggle scrollToAbout={scrollToAbout}/>
+                    </div> 
+                  </div> 
+                </div> {/*End about*/}
+                
+                <div className="bg-white">
+                  <div className="p-9">
+                    <div className="ct-subheadline">
+                      Categories
+                    </div> 
+                    {/* Render CardCategories and CardSlider from data */}
+                    <CardSlider />
+                  </div>
+                </div>{/*End category-previous*/}
 
-        <Footer />        
+
+                <div className="bg-gray-100">
+                  <div className="p-9">
+                    <div className="ct-subheadline">
+                      Hot Books
+                    </div>
+                    
+                  </div>
+                </div> {/*End hot-book*/}           
+
+              </main> {/*End Body*/}
+
+          </div> {/* End content-wrapper */}
+
+          <Footer />
         </>
     )
 }

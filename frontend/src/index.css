@@ -40,3 +40,12 @@
 .ct-link {
   @apply hover:text-pornhub-200;
 }
+
+.ct-flyout-menu {
+  @apply w-full text-black hover:bg-pornhub-200 hover:text-white hover:rounded-md p-3 duration-300 -z-40;;
+}
+
+.ct-subheadline {
+  @apply flex justify-center items-center font-extrabold text-2xl sm:text-3xl lg:text-4xl pt-6 pb-9;
+}
+

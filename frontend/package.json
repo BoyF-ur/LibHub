@@ -8,18 +8,24 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev:frontend": "cd C:\\Users\\Admin\\Desktop\\LibHub\\frontend && vite",  
-    "dev:backend": "cd C:\\Users\\Admin\\Desktop\\LibHub\\backend && node index.js",  
+    "dev:frontend": "cd D:\\Project\\ClubProject\\lib-hub-project\\frontend&& vite",
+    "dev:backend": "cd D:\\Project\\ClubProject\\lib-hub-project\\backend && node index.js",
     "dev:all": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@glidejs/glide": "^3.7.1",
     "axios": "^1.7.9",
     "concurrently": "^9.1.2",
+    "framer-motion": "^12.4.7",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "react-router-dom": "^7.1.5"
+    "react-router-dom": "^7.1.5",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
