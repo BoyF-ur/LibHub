@@ -6,6 +6,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const User = require("./models/user.model");
+const Book = require("./models/book.model");
+const { authenticateToken } = require("./utilities");
+
 
 mongoose.connect(config.connectionString);
 
@@ -15,7 +18,7 @@ app.use(cors({ origin: "*" }));
 
 //Creat Account
 app.post("/signup", async (req, res) => {
-    const { fullName, email, password } = req.body;
+    const { fullName, email, password, Image } = req.body;
     if (!fullName || !email || !password) {
         return res
             .status(400)
@@ -76,7 +79,7 @@ app.post("/login", async (req, res) => {
 
     const accessToken = jwt.sign(
         { userId: user.id },
-
+        
         process.env.ACCESS_TOKEN_SECRET,
         {
             expiresIn: "72h",
@@ -85,13 +88,50 @@ app.post("/login", async (req, res) => {
     return res.json({
         error: false,
         message: "Login Successful",
-        user: { fullName: user.fullName, email: user.email },
+        //user: { fullName: user.fullName, email: user.email },
         accessToken,
     });
 
 });
 
-console.log("HiepPotato");
+//Get User
+app.get("/get-user", authenticateToken, async (req, res) => {
+    const { userId } = req.user
+    const isUser = await User.findOne({ _id: userId });
+    //console.log(userId, "\n");
+    if (!isUser) {
+        return res.sendStatus(401);
+    }
+    return res.json({
+        user: isUser,
+        message: "",
+    });
+});
+
+//add book
+
+app.post("/add-book", authenticateToken, async (req, res) => {
+    const { userId } = req.user;
+    req.body.userId = userId;
+
+    if (!req.body.title || !req.body.category || !req.body.story || !req.body.date || !req.body.imageUrl) {
+        return res.status(400).json({ error: true, message: "All fields are required" });
+    }
+
+    const parsedVisitedDate = new Date(parseInt(req.body.visitedDate));
+    req.body.visitedDate = parsedVisitedDate;
+    try {
+        const book = new Book(req.body);
+
+        await book.save();
+        res.status(201).json({ story: book, message: "Added Successfully" });
+    } catch (error) {
+        res.status(400).json({ error: true, message: error.message });
+    }
+
+});
+
+
 
 app.listen(8000);
 module.exports = app;

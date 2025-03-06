@@ -1,0 +1,46 @@
+{
+  "categories": [
+    { 
+      "id": 1,
+      "title": "Technology BookShelf",
+      "description": "Tủ sách công nghệ là tủ sách chứa những quyển sách công nghệ...",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    {
+      "id": 2,
+      "title": "Science BookShelf",
+      "description": "Tủ sách khoa học là tủ sách chứa những quyển sách khoa học...",
+      "imageUrl": "/public/library_view.png",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    {
+      "id": 3,
+      "title": "History BookShelf",
+      "description": "Tủ sách lịch sự là tủ sách chứa những quyển sách lịch sử...",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    {
+      "id": 4,
+      "title": "History BookShelf",
+      "description": "Tủ sách lịch sự là tủ sách chứa những quyển sách lịch sử...",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    {
+      "id": 5,
+      "title": "History BookShelf",
+      "description": "Tủ sách lịch sự là tủ sách chứa những quyển sách lịch sử...",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    {
+      "id": 6,
+      "title": "History BookShelf",
+      "description": "Tủ sách lịch sự là tủ sách chứa những quyển sách lịch sử...",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    }
+  ]
+}
