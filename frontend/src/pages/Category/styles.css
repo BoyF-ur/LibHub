@@ -116,7 +116,6 @@ body {
 }
 
 .box {
-  width: calc(100% / 5 - 6px - 8px);
   border-radius: 30px;
   box-shadow: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

@@ -4,7 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
+   theme: {
     fontFamily: {
       display: ['Kumbh Sans', "Poppins", "sans-serif"],
       NunitoSans: ['Nunito Sans','san-serif'],
@@ -17,6 +17,13 @@ export default {
           200: '#ff9900',
           300: '#ffbb00',
         }
+      },
+      screens:{
+        md:"501px",
+        sm:"430px",
+        lg:"772px",
+        vsm:"100px",
+        vlg:"910px"
       }
     },
     animation: {

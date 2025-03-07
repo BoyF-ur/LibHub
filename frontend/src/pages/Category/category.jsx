@@ -6,6 +6,7 @@ import BookBox from "../../components/BookBox";
 import axios from "axios";
 import Filter from "../../components/Filter/Filter";
 import Pagination from "../../components/Pagination";
+import SortFilter from "../../components/SortFilter";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -44,35 +45,86 @@ const Category = () => {
     setLoading(false);
   }, []);
 
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isScreenInRange, setIsScreenInRange] = useState(
+    window.innerWidth >= 100 && window.innerWidth <= 772
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsScreenInRange(window.innerWidth >= 100 && window.innerWidth <= 772);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <Header />
       <main id="main">
         <div className="inner-wrap flex flex-row justify-center box-border pb-0">
-          <div className="inner-filter block basis-1/4 max-w-[25%] relative col-auto border-list rounded-filter pl-4 pr-4 pb-8 mt-5 mb-10">
-            <div className="main-filter">
-              <h4 className="pt-4 pl-4 pr-4 pb-0 text-[var(--color-text)] items-center ">
-                <span className="text-2xl">Category</span>
-              </h4>
-              <div className="list-wrapper p-4 block ">
-                <ul className="list flex flex-col list-none m-0 p-0 border-none line-inherit">
-                  {filters.map((filter) => (
-                    <Filter
-                      id={filter.id}
-                      title={filter.title}
-                      selectedCategory={selectedCategory} // Truyền state vào component Filter
-                      setSelectedCategory={setSelectedCategory}
-                    />
-                  ))}
-                </ul>
+          <div className="relative p-4">
+            {isScreenInRange ? (
+              <>
+                <SortFilter onFilterClick={() => setIsFilterOpen(true)} />
+                {isFilterOpen && (
+                  <div className="fixed top-0 right-0 h-full w-full bg-white shadow-lg transition-transform duration-300 z-50 translate-x-0">
+                    <button
+                      className="p-4 text-red-500 font-bold"
+                      onClick={() => setIsFilterOpen(false)}
+                    >
+                      Đóng
+                    </button>
+                    <div className="main-filter">
+                      <h4 className="pt-4 pl-4 pr-4 pb-0 text-[var(--color-text)] items-center">
+                        <span className="text-2xl">Category</span>
+                      </h4>
+                      <div className="list-wrapper p-4 pt-2 block">
+                        <ul className="list flex flex-wrap flex-col list-none m-0 p-0 border-none line-inherit">
+                          {filters.map((filter) => (
+                            <Filter
+                              key={filter.id}
+                              id={filter.id}
+                              title={filter.title}
+                              selectedCategory={selectedCategory}
+                              setSelectedCategory={setSelectedCategory}
+                            />
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="inner-filter inline-block basis-1/4 max-w-fit col-auto border-list rounded-filter pl-4 pr-4 pb-8 mt-5 mb-10 max-h-fit sticky top-5">
+                <div className="main-filter">
+                  <h4 className="pt-4 pl-4 pr-4 pb-0 text-[var(--color-text)] items-center">
+                    <span className="text-2xl">Category</span>
+                  </h4>
+                  <div className="list-wrapper p-4 pt-2 block">
+                    <ul className="list flex flex-wrap flex-col list-none m-0 p-0 border-none line-inherit">
+                      {filters.map((filter) => (
+                        <Filter
+                          key={filter.id}
+                          id={filter.id}
+                          title={filter.title}
+                          selectedCategory={selectedCategory}
+                          setSelectedCategory={setSelectedCategory}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="inner-category basis-3/4 max-w-[75%] pl-4 pr-4 pb-8">
             <div className="inner-des relative mb">
               <div className=" flex flex-row justify-between w-full">
                 <div className="max-h-full flex flex-row items-center font-text">
-                  <p className="mb-0 mt-0 font-semibold inline-block ">
+                  <p className="mb-0 mt-0 font-semibold inline-block vsm:max-lg:hidden">
                     Hiển thị 1-Null trang
                   </p>
                   <div className="sort-dropdown m-7">

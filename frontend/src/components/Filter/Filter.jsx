@@ -8,6 +8,7 @@ const Filter = ({ id, title, selectedCategory, setSelectedCategory}) => {
           name="category"
           checked={selectedCategory === id}  // Kiểm tra đúng giá trị được chọn
           onChange={() => setSelectedCategory(id)}  // Cập nhật state khi chọn
+          className="flex-none"
         />
         <label htmlFor={id}>{title}</label>
       </div>
