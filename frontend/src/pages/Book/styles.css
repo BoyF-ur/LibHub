@@ -1,0 +1,167 @@
+.bg-blue {
+    background-color: #4070f4;
+  }
+  
+  .bg-light-white {
+    background-color: #f5f5f5;
+  }
+  
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  .section-1 {
+    flex: 1;
+  }
+  
+  .border-list {
+    border: 1px solid #dddddd;
+  }
+  
+  :root {
+    --color-text: #d71f27;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .line-inherit {
+    line-height: inherit;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .filter-container {
+    width: 250px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .filter-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d92525;
+    margin-bottom: 10px;
+  }
+  .filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .filter-option input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #d92525;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+  }
+  .filter-option input:checked {
+    background-color: #d92525;
+  }
+  .filter-option input:checked::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .filter-option label {
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .rounded-filter {
+    border-radius: 1.125rem;
+  }
+  
+  .mb {
+    margin-bottom: 30px;
+  }
+  
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .font-text {
+    font-family: Arial, sans-serif;
+  }
+  
+  .sort-dropdown select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .wid-2 {
+    width: 200px;
+  }
+  
+  .text-white-1 {
+    color: black;
+  }
+  
+  .box {
+    border-radius: 30px;
+    box-shadow: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-css{
+      text-align: center;
+  }
+  
+  .text-css:hover{
+      color: #d71f27;
+  }
+  
+  .c-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .pagination button.active {
+    font-weight: bold;
+    color: red;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }

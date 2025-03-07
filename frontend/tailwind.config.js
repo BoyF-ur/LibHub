@@ -4,7 +4,11 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
+   theme: {
+    fontFamily: {
+      display: ['Kumbh Sans', "Poppins", "sans-serif"],
+      NunitoSans: ['Nunito Sans','san-serif'],
+    },
     extend: {
       colors:{
         primary: "#05B6D3",
@@ -14,21 +18,23 @@ export default {
           300: '#ffbb00',
         }
       },
-      fontFamily: {
-        KumbhSans: ['Kumbh Sans', 'san-serif'], 
-        NunitoSans: ['Nunito Sans','san-serif'],
-      },
-      animation: {
-        slideDown: 'slideDown 0.5s ease-in-out',
-      },
-      keyframes: {
-        slideDown: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(0)' },
-        },
-      },  
+      screens:{
+        md:"501px",
+        sm:"430px",
+        lg:"772px",
+        vsm:"100px",
+        vlg:"910px"
+      }
     },
+    animation: {
+      slideDown: 'slideDown 0.5s ease-in-out',
+    },
+    keyframes: {
+      slideDown: {
+        '0%': { transform: 'translateY(-100%)' },
+        '100%': { transform: 'translateY(0)' },
+      },
+    }
   },
   plugins: [],
 }
-
