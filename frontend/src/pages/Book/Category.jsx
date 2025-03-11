@@ -90,7 +90,7 @@ const Category = () => {
       </header>
       <main id="main">
         <div className="inner-wrap flex flex-row justify-center box-border pb-0">
-          <div className="relative p-4">
+          <div className="relative p-4 h-fit ">
             {isScreenInRange ? (
               <>
                 <SortFilter onFilterClick={() => setIsFilterOpen(true)} />
@@ -146,7 +146,7 @@ const Category = () => {
               </div>
             )}
           </div>
-          <div className="inner-category basis-3/4 max-w-[75%] pl-4 pr-4 pb-8">
+          <div className="inner-category basis-3/4 max-w-[75%] vsm:basis-full pl-4 pr-4 pb-8">
             <div className="inner-des relative mb">
               <div className=" flex flex-row justify-between w-full">
                 <div className="max-h-full flex flex-row items-center font-text">
@@ -173,18 +173,7 @@ const Category = () => {
             </div>
 
             <div className="inner-wrap c-container">
-              <div className="list-book-1 flex flex-row justify-between flex-wrap ">
-                {categories.map((category) => (
-                  <BookBox
-                    key={category.id}
-                    title={category.title}
-                    description={category.description}
-                    imgUrl={category.imageUrl}
-                  />
-                ))}
-              </div>
-
-              <div className="list-book-2 flex flex-row justify-between flex-wrap ">
+              <div className="list-book flex flex-row justify-between flex-wrap gap-[50px]">
                 {categories.map((category) => (
                   <BookBox
                     key={category.id}
@@ -197,14 +186,15 @@ const Category = () => {
             </div>
           </div>
         </div>
-        <div>
+      </main>
+
+      <div>
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
           />
         </div>
-      </main>
 
       <Footer />
     </>

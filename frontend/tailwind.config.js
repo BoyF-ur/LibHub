@@ -19,11 +19,11 @@ export default {
         }
       },
       screens:{
-        md:"501px",
+        md:"607px",
         sm:"430px",
-        lg:"772px",
+        lg:"983px",
         vsm:"100px",
-        vlg:"910px"
+        vlg:"1103px"
       }
     },
     animation: {

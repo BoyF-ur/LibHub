@@ -2,7 +2,7 @@ import React from "react";
 
 const CardCategory = ({id, title, description, imageUrl, linkCategory}) => {
   return (
-    <div className="cursor-pointer p-4 md:w-[85%] m-auto hover:-translate-y-3 duration-300">
+    <div className="cursor-pointer sm:w-[85%] m-auto hover:-translate-y-3 duration-300">
       <a href={linkCategory}>
         <div className="h-[430px] rounded-2xl overflow-hidden shadow-md hover:shadow-lg duration-300 bg-gray-50">
           {/* Cover book */}
