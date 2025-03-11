@@ -173,9 +173,9 @@ const Category = () => {
             </div>
 
             <div className="inner-wrap c-container">
-              <div className="list-book flex flex-row justify-between flex-wrap gap-[50px]">
+              <div className="list-book flex flex-row flex-wrap gap-[50px]">
                 {categories.map((category) => (
-                  <BookBox
+                  <BookBox  
                     key={category.id}
                     title={category.title}
                     description={category.description}
