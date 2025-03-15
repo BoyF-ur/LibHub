@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { PrevArrow, NextArrow } from "./Arrow";
+import axiosInstance from "../utils/axiosInstance";
 
 const CardSlider = () => {
 
@@ -15,7 +16,8 @@ const CardSlider = () => {
   //fetching data category
   const fetchData = async () => { 
     try {
-      const response = await axios.get("http://localhost:3000/categories");
+      const response = await axiosInstance.get("/categories");
+      // const response = await axios.get("http://localhost:3000/categories");
       setCategories(response.data);
       setLoading(false);
     } catch (err) {

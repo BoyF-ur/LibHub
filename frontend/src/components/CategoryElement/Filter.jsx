@@ -1,13 +1,14 @@
 const Filter = ({ id, title, selectedCategory, setSelectedCategory}) => {
-    return (
+  return (
       <li>
         <div className="filter-option">
           <input
             type="radio"
             id={id}
             name="category"
-            checked={selectedCategory === id}
-            onChange={() => setSelectedCategory(id)}
+            checked={selectedCategory.id === id}
+            // onClick={handleClick}
+            onChange={() => setSelectedCategory({ id, title })}
             className="flex-none"
           />
           <label htmlFor={id}>{title}</label>

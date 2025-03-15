@@ -73,7 +73,7 @@ const Home = () =>{
                       Categories
                     </div> 
                     {/* Render CardCategories and CardSlider from data */}
-                    <CardSlider />
+                    <CardSlider />{/*bruh 3000 port*/}
                   </div>
                 </div>{/*End category-previous*/}
 

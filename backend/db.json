@@ -2,44 +2,65 @@
   "categories": [
     { 
       "id": 1,
-      "title": "Technology Book",
+      "title": "Technology Books",
       "description": "Tên sách",
       "imageUrl": "/public/tech-category.jpg",
       "linkCategory": "http://localhost:5173/category"
     },
     {
       "id": 2,
-      "title": "Science Book",
+      "title": "Science BookShelf",
       "description": "Tên sách",
       "imageUrl": "/public/library_view.png",
       "linkCategory": "http://localhost:5173/category"
     },
     {
       "id": 3,
-      "title": "History Book",
+      "title": "Physics BookShelf",
       "description": "Tên sách",
       "imageUrl": "/public/tech-category.jpg",
       "linkCategory": "http://localhost:5173/category"
     },
     {
       "id": 4,
-      "title": "Linguist Book",
+      "title": "History BookShelf",
       "description": "Tên sách",
       "imageUrl": "/public/tech-category.jpg",
       "linkCategory": "http://localhost:5173/category"
     },
     {
       "id": 5,
-      "title": "Economy Book",
+      "title": "Economy BookShelf",
+      "description": "Tên sách",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    { 
+      "id": 6,
+      "title": "comic BookShelf",
+      "description": "Tên sách",
+      "imageUrl": "/public/tech-category.jpg",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    { 
+      "id": 7,
+      "title": "Science and Social BookShelf",
       "description": "Tên sách",
       "imageUrl": "/public/tech-category.jpg",
       "linkCategory": "http://localhost:5173/category"
     },
     {
-      "id": 6,
-      "title": "Comic Book",
-      "description": "Tên sách ",
-      "imageUrl": "/public/tech-category.jpg",
+      "id": 8,
+      "title": "Technology BookShelf",
+      "description": "Tên sách",
+      "imageUrl": "/public/library_view.png",
+      "linkCategory": "http://localhost:5173/category"
+    },
+    {
+      "id": 9,
+      "title": "Technology BookShelf",
+      "description": "Tên sách",
+      "imageUrl": "/public/library_view.png",
       "linkCategory": "http://localhost:5173/category"
     }
   ]
