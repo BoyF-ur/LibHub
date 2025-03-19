@@ -8,8 +8,8 @@ import axios from 'axios';
 import GameCard from "../../components/Cards/GameCard";
 import CardSlider from "../../components/Cards/CardSlider";
 import { useSearch } from "../../utils/useSearch";  // Import the custom hook
-import "../About/styles.css";
 import Card from "../../components/Cards/Card";
+import "../../index.css";
 
 const Home = () => {
   const [items, setItems] = useState({ categories: [], hotBooks: [] });
@@ -84,7 +84,7 @@ const Home = () => {
           />
         </header>
 
-        <main className="">
+        <main className="wrapper">
           <div className="bg-gradient-to-tl from-gray-150 via-gray-200 to-white rounded-3xl">
             <div className="p-5 " id='about'>
               <div className="ct-subheadline">

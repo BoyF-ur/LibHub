@@ -54,6 +54,38 @@
   overflow: hidden;
 }
 
+.wrapper {
+  width: 100%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width : 1200px) {
+  .wrapper{
+      max-width: 960px;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .wrapper{
+      max-width: 720px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper{
+      max-width: 540px;
+  }
+}
+
+@media (max-width: 576px) {
+  .wrapper{
+      max-width: 100%;
+  }
+}
+
 @layer components {
   .input-box{
     @apply w-full text-sm bg-cyan-600/5 rounded px-5 py-3 mb-4 outline-none;

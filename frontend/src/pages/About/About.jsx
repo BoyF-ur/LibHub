@@ -4,6 +4,7 @@ import { useSearch } from '../../utils/useSearch';
 import Footer from '../../components/layouts/Footer';
 import CardMember from "../../components/Cards/CardMember";
 import CardSlider from "../../components/Cards/CardSlider";
+import "./styles.css"
 const About = () => {
   const {
     searchQuery,
