@@ -15,6 +15,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const Category = require("./models/category.model");
 const Borrow = require("./models/borrow.model");
+const Post = require("./models/post.model");
 
 
 mongoose.connect(config.connectionString);
@@ -277,7 +278,7 @@ app.get("/get-book/:id", async (req, res) => {
     }
 });
 
-//upload book cover
+//upload image
 app.post("/image-upload", upload.single("image"), async (req, res) => {
     try {
         if (!req.file) {
@@ -635,7 +636,6 @@ app.delete("/delete-borrow/:id", authenticateToken, async (req, res) => {
     }
 });
 
-
 //Get Borrowed Books
 app.get("/get-borrowed-book", authenticateToken, async (req, res) => {
     const { userId } = req.user;
@@ -647,6 +647,23 @@ app.get("/get-borrowed-book", authenticateToken, async (req, res) => {
             borrowed,
             borrowedById
         });
+    } catch (error) {
+        res.status(500).json({ error: true, message: error.message });
+    }
+});
+
+//Confession
+app.post("/create-post", async (req, res) => {
+    const newPost = new Post(req.body);
+    await newPost.save();
+    res.status(200).json(newPost);
+});
+
+app.get("/get-posts", async (req, res) => {
+    try {
+        const posts = await Post.find({});
+
+        res.status(200).json({posts});
     } catch (error) {
         res.status(500).json({ error: true, message: error.message });
     }
