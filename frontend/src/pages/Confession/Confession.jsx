@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef  } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
@@ -14,7 +14,6 @@ const Confession = () => {
   const fileInputRef = useRef(null);
   const [userId, setUserId] = useState();
 
-
   const getUserId = async () => {
     try {
       const response = await axiosInstance.get("/get-user");
@@ -23,7 +22,7 @@ const Confession = () => {
     } catch (error) {
       console.error("Lỗi khi lấy userId:", error);
     }
-  }
+  };
 
   const getPosts = async () => {
     try {
@@ -80,7 +79,9 @@ const Confession = () => {
   const handleDeleteImage = async () => {
     if (!image) return;
     try {
-      await axiosInstance.delete(`/delete-image?imageUrl=${encodeURIComponent(image)}`);
+      await axiosInstance.delete(
+        `/delete-image?imageUrl=${encodeURIComponent(image)}`
+      );
       fileInputRef.current.value = "";
       setImage(null); // Xóa ảnh khỏi state sau khi xóa thành công
     } catch (error) {
@@ -105,18 +106,31 @@ const Confession = () => {
             onChange={(e) => setContent(e.target.value)}
           />
 
-          <div className="flex gap-2 mt-2 justify-end">
-            <label htmlFor="file-upload" className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200">
-              <i className="fas fa-photo-video text-green-600"></i>
-              <strong>Photo</strong>
+          <div className="flex gap-2 mt-2 justify-end sm:justify-end vsm:items-end sm:flex-row md:flex-row vsm:flex-col">
+            <label
+              htmlFor="file-upload"
+              className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200 transform hover:scale-105 in-ease-in duration-700 w-fit md:p-0 scr:px-4 scr:py-2 vsm:p-0"
+            >
+              <i className="fas fa-photo-video text-green-600 vsm:text-[10px] sm:text-[16px]"></i>
+              <strong className="vsm:text-[10px] sm:text-[16px]">Photo</strong>
             </label>
-            <input type="file" id="file-upload" className="hidden" onChange={handleImageChange}   ref={fileInputRef} />
+            <input
+              type="file"
+              id="file-upload"
+              className="hidden"
+              onChange={handleImageChange}
+              ref={fileInputRef}
+            />
             {image && (
               <div className="relative mt-2">
-                <img src={`http://localhost:8000${image}`} alt="Uploaded" className="w-full max-h-[500px] object-contain rounded-lg" />
-                
+                <img
+                  src={`http://localhost:8000${image}`}
+                  alt="Uploaded"
+                  className="w-full max-h-[500px] object-contain rounded-lg"
+                />
+
                 {/* Nút Xóa Ảnh */}
-                <button 
+                <button
                   className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-700"
                   onClick={handleDeleteImage}
                 >
@@ -125,10 +139,12 @@ const Confession = () => {
               </div>
             )}
 
-            <button className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200"
-              onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-              <i className="fas fa-smile text-yellow-500"></i>
-              <strong>Emoji</strong>
+            <button
+              className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200 transform hover:scale-105 in-ease-in duration-700 w-fit md:p-0 scr:px-4 scr:py-2 vsm:p-0"
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            >
+              <i className="fas fa-smile text-yellow-500 vsm:text-[10px] sm:text-[16px]"></i>
+              <strong className="vsm:text-[10px] sm:text-[16px]">Emoji</strong>
             </button>
           </div>
 
@@ -138,10 +154,18 @@ const Confession = () => {
             </div>
           )}
 
-          {image && <img src={image} alt="Preview" className="mt-2 w-full max-h-[500px] object-contain rounded-lg" />}
+          {image && (
+            <img
+              src={image}
+              alt="Preview"
+              className="mt-2 w-full max-h-[500px] object-contain rounded-lg"
+            />
+          )}
 
-          <button className="w-full bg-black text-pornhub-200 text-lg py-2 rounded mt-2 hover:bg-gray-800 duration-300"
-            onClick={handlePost}>
+          <button
+            className="w-full bg-black text-pornhub-200 text-lg py-2 rounded mt-2 hover:bg-gray-800 duration-300"
+            onClick={handlePost}
+          >
             <strong>Post</strong>
           </button>
 
