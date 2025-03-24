@@ -57,15 +57,16 @@ const Login = () => {
     >
       {/* Logo */}
       <div className="absolute top-4 left-4">
-        <img src="public/lib-hub-logo.png" alt="Logo-lib-hub" className="w-32 h-16" /> {/* ✅ Đường dẫn đúng */}
+        <a href="/home">
+          <img src="public/lib-hub-logo.png" alt="Logo-lib-hub" className="w-32 h-16" /> {/* ✅ Đường dẫn đúng */}
+        </a>
       </div>
 
       <div className="bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg w-96">
         {/* Title */}
-        <h2 className="text-center text-xl font-bold mb-1">Login</h2>
-        <p className="text-center text-lg text-gray-900 font-bold mb-4">
+        <h2 className="text-center text-xl text-gray-900 font-bold mb-4">
           Welcome back!
-        </p>
+        </h2>
 
         {/* Form */}
         <form onSubmit={handleLogin}>

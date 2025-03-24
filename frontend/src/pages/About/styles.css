@@ -1,0 +1,28 @@
+.wrapper {
+    width: 100%;
+    max-width: 596px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 992px) {
+    .wrapper{
+        max-width: 600px;
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper{
+        max-width: 540px;
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .wrapper{
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}

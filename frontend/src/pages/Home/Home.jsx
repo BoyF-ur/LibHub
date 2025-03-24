@@ -1,93 +1,77 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../../components/layouts/Footer";
 import { Navigate, useNavigate } from "react-router-dom"
-import axiosInstance from "../../utils/axiosInstance";
 import Header from "../../components/layouts/Header";
-import TextToggle from "../../components/TextToggle";
+import Footer from "../../components/layouts/Footer";
+import axiosInstance from "../../utils/axiosInstance";
 import GameCard from "../../components/Cards/GameCard";
 import CardSlider from "../../components/Cards/CardSlider";
-import HotBookSlider from "../../components/Cards/HotBookSlider";
+import { useSearch } from "../../utils/useSearch";  // Import the custom hook
+import "../About/styles.css";
 
 const Home = () => {
+  const [items, setItems] = useState({ categories: [], hotBooks: [] });
+  const [HotBooks, setHotBooks] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-    // get Inforamation user
-    const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState(null);
+  // get Inforamation user
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
 
-    const [allBooks, setAllBooks] = useState([]);
-    const [filterType, setFilterType] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(true);
+  const {
+    searchQuery,
+    setSearchQuery,
+    onSearchBook,
+    handleClearSearch,
+  } = useSearch();
 
-
-  // fetching data category
-  const fetchData = async () => {
-    try {
-      const response = await axiosInstance.get("/categories");
-      setCategories(response.data.story);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-    const getAllBooks = async () => {
-      try{
-          const response = await axiosInstance.get("/get-all-book");
-          if(response.data && response.data.stories){
-              setAllBooks(response.data.stories);
-          }
-      }catch(error){
-          console.log("An unexpected error occurred. Please try again");
-      }
-    }
-
-    const onSearchBook = async (query) => {
-      try{
-        const response = await axiosInstance.get("/search", {
-          params:{
-            query,
-          },
-        });
-        if(response.data && response.data.stories){
-          setFilterType("search");
-          setAllBooks(response.data.stories);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetching categories from /home
+        const categoryResponse = await axiosInstance.get('/home');
+        if (categoryResponse.data && categoryResponse.data.categories) {
+          setCategories(categoryResponse.data.categories);
         }
-    }catch(error){
-        setError("An unexpected error occurred.Please try again!")
+
+        // Fetching books from /get-all-book
+        const bookResponse = await axiosInstance.get('/get-all-book');
+        if (bookResponse.data && bookResponse.data.stories) {
+          setHotBooks(bookResponse.data.stories);
+        }
+
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
       }
-    }
+    };
+    fetchData();
+  }, []);
 
-    const handleClearSearch = () => {
-    setFilterType("");
-    getAllBooks();
-    }
-    useEffect(() => {
-      fetchData();
-      getAllBooks();
-        }, []);
+  // When fetching process
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
-    return(
-        <>
-          <div className="content-wrapper font-NunitoSans">
-            <header>
-              <Header 
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                onSearchNote={onSearchBook}
-                handleClearSearch={handleClearSearch}
-              />  
-            </header>
-      
-              <main className="">
-                <div className="rounded-lg">
-                  <GameCard />
-                </div> 
+  return (
+    <>
+      <div className="font-NunitoSans">
+        <header>
+          <Header
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onSearchNote={onSearchBook}
+            handleClearSearch={handleClearSearch}
+          />
+        </header>
 
-          <div className="bg-gray-100 h-auto">
-            <div className="p-5 " id='about'>
+        <div className="rounded-lg">
+          {/* <GameCard /> */}
+        </div>
+        <main className="w-full">
+
+          <div className="bg-gray-100 h-auto w-full">
+            <div className="p-5 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-5 ">
               <div className="ct-subheadline">
                 What is the <span className="text-pornhub-200 ml-2 mr-2">Libhub</span> product?
               </div>
@@ -96,35 +80,53 @@ const Home = () => {
                   Libhub stands for Library Hub. This is an innovative improvement to the schools library system, designed to enhance students learning experience. It simplifies the search for academic resources, making it easier to find relevant materials. Libhub, simplifies resource searching and provides a virtual library simulation, making it easier for students to access and explore academic materials. We aim to optimize UI/UX to make the library more user-friendly and interesting.
                 </p>
               </div>
-              <TextToggle />
+              <div className='flex justify-center items-center my-3 font-KumbhSans'>
+                <a href="/about">
+                  <button className='py-3 px-6 rounded-full text-black bg-pornhub-200 hover:bg-pornhub-300 font-semibold'>More details</button>
+                </a>
+              </div>
             </div>
           </div> {/*End about*/}
 
           <div className="bg-white">
-            <div className="p-9">
+            <div className="p-9 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
               <div className="ct-subheadline">
                 Categories
               </div>
-              {/* Render CardCategories and CardSlider from data */}
-              <CardSlider />
+              {/* Render CategoryCards from Card.jsx */}
+              <CardSlider
+                items={categories}
+                variant="category"
+                type="home"
+                cardType="card"
+                getKey={(item) => item.title} //return name category
+              />
             </div>
           </div>{/*End category-previous*/}
 
-
           <div className="bg-gray-100">
-            <div className="p-9">
+            <div className="p-9 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
               <div className="ct-subheadline">
                 Hot Books
               </div>
-              <HotBookSlider />
+              {/* Render HotBookCards from Card.jsx */}
+              <CardSlider
+                items={HotBooks}
+                variant="hotbook"
+                type="home"
+                cardType="card"
+                getKey={(item) => item._id} //return id bookDetails 
+              />
             </div>
           </div> {/*End hot-book*/}
 
         </main> {/*End Body*/}
 
+        <footer>
+          <Footer />
+        </footer>
       </div> {/* End content-wrapper */}
 
-      <Footer />
     </>
   )
 }

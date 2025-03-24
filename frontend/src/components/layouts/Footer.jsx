@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigationScroll } from "../../utils/navigationScroll";
 
 const Footer = () => {
+  const { handleAboutClick} = useNavigationScroll();
+
   return (
     <>
       <div className="bg-gray-200">
@@ -17,9 +20,9 @@ const Footer = () => {
             <div className="basis-1/6 mt-7">
               <div className="uppercase font-semibold tracking-wider text-gray-600 mb-4">Menu</div>
               <div className="flex flex-col gap-3">
-                <div className=""><a href="#" className="ct-link">Home</a></div>
-                <div className=""><a href="#" className="ct-link">About</a></div>
-                <div className=""><a href="#" className="ct-link">Category</a></div>
+                <div className=""><a href="/home" className="ct-link">Home</a></div>
+                <div className=""><a href="/about" className="ct-link" onClick={handleAboutClick}>About</a></div>
+                <div className=""><a href="/category/All" className="ct-link">Category</a></div>
               </div>
             </div>
 
@@ -39,7 +42,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <hr className="my-2 border-gray-400 sm:mx-auto lg:my-8 sm:my-7 "/>
+          <hr className="my-2 border-gray-400 sm:mx-auto lg:my-8 sm:my-7 " />
           <div className="flex justify-between items-center">
             <p className="text-gray-400 hover:text-pornhub-200 hover:duration-100 text-sm">Copyright © Libhub 2025</p>
             {/* <div className=""><a href="https://sso.jsclub.dev/login?appUrl=https://s.jsclub.dev" target="blank" className="text-gray-400 hover:text-pornhub-200 hover:duration-100 text-sm ">Powered by Team 4</a></div> */}

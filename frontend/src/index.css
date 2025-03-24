@@ -15,6 +15,11 @@
     --rdp-selected-font: bold medium var(--rdp-font-family);
   }
 
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-webkit-credentials-auto-fill-button {
+      display: none;
+  }
+
 @layer base{
 
   html{
@@ -105,3 +110,9 @@
 .ct-avatar {
   @apply w-20 h-20 rounded-full object-cover block mx-auto hover:translate-y-1 hover:scale-105 duration-300;
 }
+
+.ct-effect-icon {
+  @apply text-black hover:text-pornhub-200 transition duration-300 border rounded-full w-9 h-9 flex justify-center items-center
+}
+
+

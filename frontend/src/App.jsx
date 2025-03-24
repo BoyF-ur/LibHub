@@ -10,6 +10,7 @@ import Search from "./pages/Book/Search";
 import { getCookie } from "./utils/getCookie";
 import BorrowedBooks from "./pages/Book/BorrowedBooks";
 import Confession from "./pages/Confession/Confession";
+import About from "./pages/About/About";
 
 const App = () => {
     const isToken = getCookie("token"); 
@@ -23,6 +24,7 @@ const App = () => {
                     <Route path="/login" element={isToken ? <Navigate to="/home" replace /> : <Login />} />
                     <Route path="/signup" element={isToken ? <Navigate to="/home" replace /> : <SignUp />} />
                     <Route path="/account" element={<Account />} />
+                    <Route path="/about" element={<About />} />
                     <Route path="/category/:title" element={<Category />} />
                     <Route path="/book/:id" element={<BookDetail />} />
                     <Route path="/search" element={<Search />} />

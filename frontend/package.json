@@ -8,13 +8,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev:frontend": "cd ..\\frontend && vite",
-    "dev:backend": "cd ..\\backend && node index.js",
-    "dev:mock-api": "cd ..\\backend && npx json-server db.json",
+    "dev:frontend": "cd D:\\Project\\Team\\LibHub\\frontend&& vite",
+    "dev:backend": "cd D:\\Project\\Team\\LibHub\\backend && node index.js",
+    "dev:mock-api": "D:\\Project\\Team\\LibHub\\backend && npx json-server db.json",
     "dev:all": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:mock-api\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@glidejs/glide": "^3.7.1",
     "@reduxjs/toolkit": "^2.6.1",
     "aos": "^2.3.4",
@@ -53,6 +54,6 @@
     "globals": "^15.14.0",
     "postcss": "^8.5.2",
     "tailwindcss": "^3.4.17",
-    "vite": "^6.2.2"
+    "vite": "^6.1.0"
   }
 }
