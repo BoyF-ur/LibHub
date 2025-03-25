@@ -5,7 +5,7 @@ import { MdAdd, MdClose} from "react-icons/md"
 const TagInput = ({tags, setTags}) => {
     
     const [inputValue, setInputValue] = useState("");
-    const categories = ["Adventure", "Action", "Technology", "Economy", "History", "Language", "Psychology", "Phylosophy"];
+    const categories = ["Technology", "Economy", "History", "Language", "Psychology", "Phylosophy"];
 
     const addNewTag = () => {
         if(inputValue.trim() !== "") {
