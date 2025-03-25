@@ -5,6 +5,8 @@ import Footer from "../../components/layouts/Footer";
 import Post from "./Post";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import axiosInstance from "../../utils/axiosInstance";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Confession = () => {
   const [content, setContent] = useState("");
@@ -13,12 +15,16 @@ const Confession = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef(null);
   const [userId, setUserId] = useState();
+  const [inUser, setInUser] = useState(false);
+
+  const navigate = useNavigate();
 
   const getUserId = async () => {
     try {
       const response = await axiosInstance.get("/get-user");
       // console.log(response.data.user._id);
       setUserId(response.data.user._id);
+      setInUser(true);
     } catch (error) {
       console.error("Lỗi khi lấy userId:", error);
     }
@@ -58,6 +64,14 @@ const Confession = () => {
       console.error("Lỗi khi đăng bài:", error);
     }
   };
+
+  const handlePostInUser = () => {
+    if(!inUser){
+      navigate("/login");
+    } else {
+      handlePost();
+    }
+  }
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -162,12 +176,21 @@ const Confession = () => {
             />
           )}
 
-          <button
-            className="w-full bg-black text-pornhub-200 text-lg py-2 rounded mt-2 hover:bg-gray-800 duration-300"
-            onClick={handlePost}
-          >
-            <strong>Post</strong>
-          </button>
+          {inUser ? (
+            <button
+              className="w-full bg-black text-pornhub-200 text-lg py-2 rounded mt-2 hover:bg-gray-800 duration-300"
+              onClick={handlePost}
+            >
+              <strong>Post</strong>
+            </button>
+          ) : (
+            <button
+              className="w-full bg-black text-pornhub-200 text-lg py-2 rounded mt-2 hover:bg-gray-800 duration-300"
+              onClick={handlePostInUser}
+            >
+              <strong>Post</strong>
+            </button>
+          )}
 
           {/* Hiển thị danh sách bài đăng bằng component Post */}
           <div className="max-w-2xl mx-auto mt-5">
