@@ -214,7 +214,7 @@ const Category = ({}) => {
       </header>
       <main id="main">
         <div className="inner-wrap flex flex-row justify-center pb-0">
-          <div className="relative p-4">
+          <div className="relative p-4 h-fit">
             {isScreenInRange ? (
               <>
                 {/* This is the filter button for mobile view */}
