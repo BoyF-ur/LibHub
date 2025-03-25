@@ -1,7 +1,6 @@
 import React from "react";
 
 const Post = ({ post }) => {
-  console.log(post.userCreate.avatar);
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow mb-4">
       <div className="flex items-center mb-2">
