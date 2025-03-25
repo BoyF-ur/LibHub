@@ -64,11 +64,8 @@ const SignUp = () => {
         className="flex items-center justify-center min-h-screen bg-cover bg-center backdrop-blur-[2px]"
         style={{ backgroundImage: "url('/library_view.png')" }} // ✅ Đường dẫn ảnh đúng
       >
-        {/* Logo */}
         <div className="absolute top-4 left-4">
-        <a href="/home">
-          <img src="public/lib-hub-logo.png" alt="Logo-lib-hub" className="w-32 h-16" /> {/* ✅ Đường dẫn đúng */}
-        </a>
+          <img src="/anhchot.png" alt="Logo-lib-hub" className="w-32 h-auto mb-1" /> 
         </div>
   
         <div className="bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg w-96">

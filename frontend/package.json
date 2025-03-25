@@ -8,10 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev:frontend": "cd D:\\Project\\Team\\LibHub\\frontend&& vite",
-    "dev:backend": "cd D:\\Project\\Team\\LibHub\\backend && node index.js",
-    "dev:mock-api": "D:\\Project\\Team\\LibHub\\backend && npx json-server db.json",
-    "dev:all": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:mock-api\""
+    "dev:frontend": "cd ..\\frontend && vite",
+    "dev:backend": "cd ..\\backend && node index.js",
+    "dev:all": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",

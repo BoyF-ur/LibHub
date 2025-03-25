@@ -19,17 +19,19 @@ const GetUser = () => {
   const [filterType, setFilterType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [books, setBooks] = useState([]);
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const [activeSection, setActiveSection] = useState('account'); 
 
-    const [openAddEditModal, setopenAddEditModal] = useState({
-        isShown: false,
-        type:"add",
-        data:null,
-    });
+  const [openAddEditModal, setopenAddEditModal] = useState({
+    isShown: false,
+    type: "add",
+    data: null,
+  });
 
-    const [openViewModal, setOpenViewModal] = useState({
-      isShown: false,
-      data: null,
-    });
+  const [openViewModal, setOpenViewModal] = useState({
+    isShown: false,
+    data: null,
+  });
 
     const getBorrowedBooks = async() => {
       try{
@@ -47,6 +49,8 @@ const GetUser = () => {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
+        console.log(123);
+        console.log(typeof response.data.user.phoneNumber);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -57,43 +61,43 @@ const GetUser = () => {
   };
 
   const handleEdit = () => {
-    setopenAddEditModal({ isShown: true, type: "edit", data: userInfo});
+    setopenAddEditModal({ isShown: true, type: "edit", data: userInfo });
   };
-  
+
   const handleViewUser = () => {
-  setOpenViewModal({isShown: true});
+    setOpenViewModal({ isShown: true });
   };
-  
+
   const getAllBooks = async () => {
-    try{
-        const response = await axiosInstance.get("/get-all-book");
-        if(response.data && response.data.stories){
-            setAllBooks(response.data.stories);
-        }
-    }catch(error){
-        console.log("An unexpected error occurred. Please try again");
+    try {
+      const response = await axiosInstance.get("/get-all-book");
+      if (response.data && response.data.stories) {
+        setAllBooks(response.data.stories);
+      }
+    } catch (error) {
+      console.log("An unexpected error occurred. Please try again");
     }
   }
 
   const onSearchBook = async (query) => {
-    try{
+    try {
       const response = await axiosInstance.get("/search", {
-        params:{
+        params: {
           query,
         },
       });
-      if(response.data && response.data.stories){
+      if (response.data && response.data.stories) {
         setFilterType("search");
         setAllBooks(response.data.stories);
       }
-  }catch(error){
-      setError("An unexpected error occurred.Please try again!")
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again!")
     }
   }
 
   const handleClearSearch = () => {
-  setFilterType("");
-  getAllBooks();
+    setFilterType("");
+    getAllBooks();
   }
 
   useEffect(() => {
@@ -102,8 +106,9 @@ const GetUser = () => {
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',
-      once: false, 
-      anchorPlacement: 'top-bottom', 
+      once: true, 
+      anchorPlacement: 'top-bottom',
+      mirror: false, 
     });
   }, []);
 
@@ -115,10 +120,36 @@ const GetUser = () => {
     navigate(path);
   };
 
+  const handleAvatarChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('avatar', file);
+
+      try {
+        const response = await axiosInstance.post('/update-avatar', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        if (response.data && response.data.user) {
+          setUserInfo(response.data.user);
+          toast.success('Avatar updated successfully!');
+        }
+      } catch (error) {
+        toast.error('Failed to update avatar. Please try again.');
+      }
+    }
+  };
+
+  const handleAvatarClick = () => {
+    setShowAvatarMenu(!showAvatarMenu);
+  };
+
   return (
     <>
       <header>
-        <Navbar 
+        <Navbar
           userInfo={userInfo}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
@@ -126,155 +157,239 @@ const GetUser = () => {
           handleClearSearch={handleClearSearch} />
       </header>
 
-      <main className="flex flex-col lg:flex-row items-start justify-center min-h-screen p-4 bg-gradient-to-r from-gray-100 to-gray-300" style={{ paddingTop: '80px' }}>
-        {userInfo ? (
-          <>
-            <div className="flex flex-col space-y-4 w-full lg:w-2/3">
-              
-              <div className="bg-white rounded-lg shadow-lg" data-aos="fade-up" data-aos-once="false">
-               
-                <div className="relative" data-aos="fade-up" data-aos-once="false">
-                  <img
-                    src="https://placehold.co/1200x300"
-                    alt="Library Cover Photo"
-                    className="w-full h-64 object-cover rounded-t-lg"
-                  />
-                  
-                  <div className="absolute -bottom-20 left-4 w-40 h-40 rounded-full bg-white border-4 border-white" data-aos="fade-up" data-aos-once="false">
-                    <img
-                      src={userInfo.avatar}
-                      alt="User Avatar"
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-2 border-white rounded-full"></div>
-                  </div>
-                </div>
-                
-                <div className="pt-24 pb-6 px-4" data-aos="fade-up" data-aos-once="false">
-                  <h2 className="text-gray-800 font-bold text-6xl text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    {userInfo.name}
-                  </h2>
-                  <div className="mt-4 text-left space-y-2">
-                    <p className="text-gray-800 font-bold text-4xl" style={{ fontFamily: 'Arial, sans-serif' }}>
-                      {userInfo.fullName}
-                    </p>
-                    <div className="flex items-center text-gray-600 text-lg">
-                      <i className="fas fa-envelope mr-4 w-6"></i>
-                      <span>{userInfo.email}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600 text-lg">
-                      <i className="fas fa-phone mr-4 w-6"></i>
-                      <span>{userInfo.phoneNumber}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600 text-lg">
-                      <i className="fas fa-info-circle mr-4 w-6"></i>
-                      <span>{userInfo.bio || "Bio: Loving reading books"}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-lg shadow-lg mt-4 p-6" data-aos="fade-up" data-aos-once="false" data-aos-anchor-placement="top-bottom">
-                <h2 className="text-gray-800 font-bold text-xl">Recent Activities</h2>
-                <div className="list-disc list-inside text-gray-600">
-                {books.map((book) => (
-                <div key={book.bookId} className="border-b border-gray-300 text-center hover:bg-gray-50">
-                  <div className="py-3 px-4">
-                    <img src={book.imageUrl} alt={book.title} className="w-16 h-20 object-cover rounded-md border border-gray-300" />
-                  </div>
-                </div>
-              ))}
-                </div>
+      <main className="flex flex-col lg:flex-row min-h-screen">
+      <aside className="w-full lg:w-1/5 bg-white text-black p-4 rounded-lg" style={{ backgroundColor: '#f5f5f5' }} data-aos="fade-right">
+  <h2 className="text-2xl font-extrabold mb-4 text-gray-800" style={{ fontFamily: 'Poppins, sans-serif', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)' }}>✨General</h2>
+  <ul className="space-y-8">
+    <li>
+      <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('account')}>
+        <i className="fas fa-user"></i>
+        <span>Account Information</span>
+      </button>
+    </li>
+    <li>
+      <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('borrowing')}>
+        <i className="fas fa-book"></i>
+        <span>Book in Borrowing</span>
+      </button>
+    </li>
+    <li>
+      <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('favourites')}>
+        <i className="fas fa-heart"></i>
+        <span>Favourites</span>
+      </button>
+    </li>
+    <li>
+      <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => handleNavigation('/login')}>
+        <i className="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </button>
+    </li>
+  </ul>
+</aside>
+
+<section className="flex flex-col space-y-4 w-full flex-grow bg-yellow-500 rounded-lg shadow-lg p-4 overflow-y-auto aos-init aos-animate" style={{ minHeight: "calc(100vh - 100px)" }} data-aos="fade-up"
+  data-aos-anchor-placement="top-top">
+  
+    {userInfo ? (
+      <>
+        {activeSection === 'account' && (
+          <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full h-full relative section-content" data-aos="fade-up">
+            <h3 className="text-4xl font-extrabold text-yellow-500 mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            👤Account Information
+            </h3>
+            <button className="absolute top-4 right-4 bg-yellow-500 text-black font-bold py-2 px-4 rounded-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white"
+              onClick={() => handleViewUser()}
+            >
+              <i className="fas fa-cog"></i>
+              <span>Account Settings</span>
+            </button>
+
+            <div className="relative flex items-start space-x-4 mb-8">
+              <div className="w-72 h-72 rounded-full bg-white border-4 border-yellow-500 relative">
+                <img src={userInfo.avatar} alt="User Avatar" className="w-full min-h-full rounded-full object-cover" />
               </div>
             </div>
-            
-            <div className="w-full lg:w-1/5 bg-white rounded-lg shadow-lg mt-4 lg:mt-0 lg:ml-4 p-4" data-aos="fade-up" data-aos-once="false">
-              <button className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2" onClick={toggleSettings}>
-                <i className="fas fa-cog"></i>
-                <span>Settings</span>
-              </button>
-              <div className={`transition-all duration-500 ease-in-out ${showSettings ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-                <div className="space-y-4 mt-4">
-                  <button className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-start space-x-2" onClick={() => handleNavigation('/change-password')}>
-                    <i className="fas fa-key"></i>
-                    <span>Change password</span>
-                  </button>
 
-                  {userInfo.role === "admin" && <button className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-start space-x-2" onClick={() => handleNavigation('/borrowed')}>
-                    <i className="fas fa-book"></i>
-                    <span>Book in borrowing</span>
-                  </button>}
-
-                  <button className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-start space-x-2" 
-                    onEdit={() => handleEdit()}
-                    onClick={() => handleViewUser()}
-                  >
-                    <i className="fas fa-cog"></i>
-                    <span>Account Settings</span>
-                  </button>
-                  <button className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-start space-x-2" onClick={() => handleNavigation('/login')}>
-                    <i className="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                  </button>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <input type="text" value={userInfo.fullName} className="input-field" readOnly />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" value={userInfo.email} className="input-field" readOnly />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                <input type="text" value={userInfo.phoneNumber} className="input-field" readOnly />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">MSSV</label>
+                <input type="text" value={userInfo.MSSV} className="input-field" readOnly />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Bio</label>
+                <textarea value={userInfo.bio || "Bio: Loving reading books"} className="textarea-field" readOnly />
               </div>
             </div>
-          </>
-        ) : (
-          <p className="text-gray-500 text-lg">Loading user information...</p>
+          </div>
         )}
+
+        {activeSection === 'borrowing' && (
+          <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full min-h-full relative section-content" data-aos="fade-up">
+            <h3 className="text-4xl font-extrabold text-yellow-500 mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              📚Book in Borrowing
+            </h3>
+            <div>
+              
+
+
+              
+            </div>
+          </div>
+        )}
+
+        {activeSection === 'favourites' && (
+          <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full min-h-full relative section-content" data-aos="fade-up">
+            <h3 className="text-4xl font-extrabold text-yellow-500 mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              ❤️Favourites
+            </h3>
+            <div>
+              
+
+
+
+
+
+            </div>
+          </div>
+        )}
+      </>
+    ) : (
+      <p className="text-gray-500 text-lg">Loading user information...</p>
+    )}
+</section>
+
+
+<style jsx>{`
+  .animated-button {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animated-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease-in-out;
+  }
+
+  .animated-button:hover::before {
+    left: 100%;
+  }
+
+  .input-field {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .textarea-field {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    resize: none;
+  }
+
+  .textarea-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .section-content {
+    width: calc(100% - 2rem); /* Adjust width to match the outer container */
+    margin: 0 auto; /* Center the content */
+  }
+`}</style>
+
       </main>
 
       <div>
-            <Modal 
-              isOpen={openAddEditModal.isShown}
-              onRequestClose={() => {}}
-              style={{
-                  overlay: {
-                      backgroundColor: "rgba(0,0,0,0.2)",
-                      zIndex: 999,
-                  },
-              }}
-              appElement={document.getElementById("root")}
-              className="model-box relative"
-            >
-            <EditUser
-                type={openAddEditModal.type}
-                userInfo={userInfo}
-                onClose={() => {
-                    setopenAddEditModal({ isShown: false, type: "add", data: null});
-                }}
-                getUserInfo={getUserInfo} 
-            />
-            </Modal>
-        
-        <Modal 
-              isOpen={openViewModal.isShown}
-              onRequestClose={() => {}}
-              style={{
-                  overlay: {
-                      backgroundColor: "rgba(0,0,0,0.2)",
-                      zIndex: 999,
-                  },
-              }}
-              appElement={document.getElementById("root")}
-              className="model-box relative"
-            >
-              <ViewUser 
-                userInfo={userInfo}
-                onClose={() => {
-                    setOpenViewModal((prevState) => ({ ...prevState, isShown: false}));
-                }}
-                onEditClick={() => {
-                    setOpenViewModal((prevState) => ({ ...prevState, isShown: false}));
-                    handleEdit(openViewModal.data || null);
-                }}
-                
-              />
-            </Modal>
-        
-        <ToastContainer />  
-        </div>
+        <Modal
+          isOpen={openAddEditModal.isShown}
+          onRequestClose={() => { }}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0,0,0,0.2)",
+              zIndex: 999,
+            },
+          }}
+          appElement={document.getElementById("root")}
+          className="model-box relative"
+        >
+          <EditUser
+            type={openAddEditModal.type}
+            userInfo={userInfo}
+            onClose={() => {
+              setopenAddEditModal({ isShown: false, type: "add", data: null });
+            }}
+            getUserInfo={getUserInfo}
+          />
+        </Modal>
+
+        <Modal
+          isOpen={openViewModal.isShown}
+          onRequestClose={() => { }}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0,0,0,0.2)",
+              zIndex: 999,
+            },
+          }}
+          appElement={document.getElementById("root")}
+          className="model-box relative"
+        >
+          <ViewUser
+            userInfo={userInfo}
+            onClose={() => {
+              setOpenViewModal((prevState) => ({ ...prevState, isShown: false }));
+            }}
+            onEditClick={() => {
+              setOpenViewModal((prevState) => ({ ...prevState, isShown: false }));
+              handleEdit(openViewModal.data || null);
+            }}
+          />
+        </Modal>
+
+        <ToastContainer />
+      </div>
 
       <Footer />
     </>

@@ -57,9 +57,7 @@ const Login = () => {
     >
       {/* Logo */}
       <div className="absolute top-4 left-4">
-        <a href="/home">
-          <img src="public/lib-hub-logo.png" alt="Logo-lib-hub" className="w-32 h-16" /> {/* ✅ Đường dẫn đúng */}
-        </a>
+        <img src="/anhchot.png" alt="Logo-lib-hub" className="w-32 h-auto mb-1" /> {/* ✅ Đường dẫn đúng */}
       </div>
 
       <div className="bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg w-96">
