@@ -134,12 +134,7 @@ const Confession = () => {
                     />
 
                     {/* Nút Xóa Ảnh */}
-                    <button
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-700"
-                      onClick={handleDeleteImage}
-                    >
-                      ✖
-                    </button>
+                    
                   </div>
                 )}
 
@@ -159,11 +154,20 @@ const Confession = () => {
               )}
 
               {image && (
-                <img
-                  src={image}
-                  alt="Preview"
-                  className="mt-2 w-full max-h-[500px] object-contain rounded-lg"
-                />
+                <div className="relative mt-2">
+                  <img
+                    src={image}
+                    alt="Preview"
+                    className="w-full max-h-[500px] object-contain rounded-lg bg-black"
+                  />
+
+                  <button
+                    className="absolute top-2 right-2 w-8 bg-red-500 text-white p-1 rounded-full hover:bg-red-700"
+                    onClick={handleDeleteImage}
+                  >
+                    ✖
+                  </button>
+                </div>
               )}
 
               <button
