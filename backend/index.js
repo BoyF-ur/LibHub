@@ -672,22 +672,6 @@ app.get("/get-posts", async (req, res) => {
     }
 });
 
-app.patch("/confession/change-status", async (req, res) => {
-    const { postId, newStatus } = req.body;
-    try {
-        // const posts = await Post.find();
-        // console.log(posts);
-        const post = await Post.findById(postId);
-        if (!post) {
-            return res.status(404).json({ message: "Post not found" });
-        }
 
-        post.status = newStatus;
-        await post.save();
-        res.json({ message: "Post status updated successfully", post });
-    } catch (error) {
-        res.status(500).json({ error: true, message: error.message });
-    }
-});
 app.listen(8000);
 module.exports = app;

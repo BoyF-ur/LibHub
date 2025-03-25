@@ -1,6 +1,7 @@
 import React from "react";
 
 const Post = ({ post }) => {
+  console.log(post.userCreate.avatar);
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow mb-4">
       <div className="flex items-center mb-2">
@@ -14,7 +15,7 @@ const Post = ({ post }) => {
           <p className="text-sm text-gray-500 sm:text-[10px] lg:text-sm vsm:text-[8px]"> {new Date(post.updatedAt).toLocaleDateString()} {new Date(post.updatedAt).toLocaleTimeString()}</p>
         </div>
       </div>
-      <p className="text-lg font-semibold sm:text-[12px] lg:text-lg vsm:text-[10px]">
+      <p>
         {post.content.split("\n").map((line, i) => (
           <React.Fragment key={i}>
             {line}
