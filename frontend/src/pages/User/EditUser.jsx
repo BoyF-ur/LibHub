@@ -112,7 +112,7 @@ const EditUser = ({
             <div className=" flex items-center gap-2 bg-white p-2 rounded-l-lg shadow-md">
               
                 <button className="btn-small" onClick={handleAddOrUpdateClick}>
-                  <MdUpdate className="text-lg"/> EDIT ACCOUNT
+                  <MdUpdate className="text-lg"/> SAVE
                 </button> 
 
               <button onClick={onClose} className="p-1 hover:bg-gray-200 rounded-full">

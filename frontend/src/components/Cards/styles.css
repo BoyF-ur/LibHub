@@ -19,12 +19,6 @@
     line-height: inherit;
   }
   
-  .inner-filter {
-    position: sticky;
-    top: 10px; 
-    z-index: 1000;
-  }
-
   body {
     font-family: Arial, sans-serif;
   }
@@ -175,8 +169,4 @@
     cursor: not-allowed;
     border-color: #ddd;
     background-color: #f9f9f9;
-}
-
-#game-frame {
-  z-index: 1;
 }

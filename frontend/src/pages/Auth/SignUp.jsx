@@ -5,7 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import React, { useState } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-const SignUp = () => {
+const SignUp = ({ setIsToken }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -42,8 +42,7 @@ const SignUp = () => {
         password:password,
       });
       if(response.data && response.data.accessToken) {
-        console.log(response.data.accessToken)
-        localStorage.setItem("token", response.data.accsessToken);
+        setIsToken(true);
         navigate("/login");
       }
     } catch(error){
@@ -65,7 +64,9 @@ const SignUp = () => {
         style={{ backgroundImage: "url('/library_view.png')" }} // ✅ Đường dẫn ảnh đúng
       >
         <div className="absolute top-4 left-4">
-          <img src="/anhchot.png" alt="Logo-lib-hub" className="w-32 h-auto mb-1" /> 
+
+          <img src="/anhchot.png" alt="Logo-lib-hub" className="w-44 h-auto mb-1" /> 
+
         </div>
   
         <div className="bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg w-96">

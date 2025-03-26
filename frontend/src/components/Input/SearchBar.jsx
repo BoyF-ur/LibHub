@@ -1,7 +1,10 @@
 import React from 'react'
 import { IoMdClose } from "react-icons/io"
+import { FaMagnifyingGlass } from "react-icons/fa6"
+import { useNavigate } from 'react-router-dom'
 
 const SearchBar = ({ value, onChange, handleSearch, onClearSearch }) => {
+  const navigate = useNavigate();
   return (
     <div className="w-full max-w-3xl items-center mx-auto relative flex justify-center">
       <input

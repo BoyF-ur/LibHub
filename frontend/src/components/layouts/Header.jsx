@@ -18,6 +18,9 @@ const Header = ({
   handleClearSearch
  }) => {
   
+
+  const {checkAuth} = useAuthStore(); 
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
@@ -88,13 +91,17 @@ const Header = ({
         onMouseLeave={() => setOpen(false)}
         className="relative w-fit h-fit z-50"
       >
-        <a href="/category/All" className="ct-top-menu-item flex items-center group">
+        <Link to="/category/All" className="ct-top-menu-item flex items-center group">
           {children}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3 ml-2 transform transition-transform duration-300 group-hover:rotate-180">
             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
           </svg>
-          <span style={{ transform: showFlyout ? "scaleX(1)" : "scaleX(0)" }} />
-        </a>
+          <span
+            style={{
+              transform: showFlyout ? "scaleX(1)" : "scaleX(0)",
+            }}
+          />
+        </Link>
         <AnimatePresence>
           {showFlyout && (
             <motion.div
@@ -118,12 +125,12 @@ const Header = ({
     return (
       <div className="h-auto w-[250px] bg-white shadow-xl font-NunitoSans rounded-md z-50">
         <ul className="font-normal text-base">
-          <li className="ct-flyout-menu"><a href="/category/Technology">Technology Books</a></li>
-          <li className="ct-flyout-menu"><a href="/category/Economy">Economy Books</a></li>
-          <li className="ct-flyout-menu"><a href="/category/History">History Books</a></li>
-          <li className="ct-flyout-menu"><a href="/category/Language">Language Books</a></li>
-          <li className="ct-flyout-menu"><a href="/category/Psychology">Psychology Books</a></li>
-          <li className="ct-flyout-menu"><a href="/category/Philosophy">Philosophy Books</a></li>
+          <li className="ct-flyout-menu"><Link to="/category/Technology">Technology Books</Link></li>
+          <li className="ct-flyout-menu"><Link to="/category/Economy">Economy Books</Link></li>
+          <li className="ct-flyout-menu"><Link to="/category/History">History Books</Link></li>
+          <li className="ct-flyout-menu"><Link to="/category/Language">Language Books</Link></li>
+          <li className="ct-flyout-menu"><Link to="/category/Psychology">Psychology Books</Link></li>
+          <li className="ct-flyout-menu"><Link to="/category/Philosophy">Philosophy Books</Link></li>
         </ul>
       </div>
     );
@@ -140,14 +147,18 @@ const Header = ({
         style={{
           position: "sticky",
           top: 0,
+
           zIndex: 1000,
+
           backgroundColor: "white",
           boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
         }}
       >
+
         <div className="flex p-12 items-center lg:basis-1/6 lg:mx-auto">
+
           <a
-            href="/home"
+            href="#"
             className="inline-flex items-center justify-center w-auto h-auto relative"
           >
             <img
@@ -174,20 +185,24 @@ const Header = ({
             handleSearch={handleSearch}
             onClearSearch={onClearSearch}
           />
+
         </>
       
   
         <ul id="ct-top-menu" className="basis-5 lg:basis-5/12 hidden lg:flex lg:justify-center lg:items-center lg:gap-12 text-base whitespace-nowrap ">
           <li><a className="ct-top-menu-item" href="/home">Home</a></li>
           <li><a className="ct-top-menu-item" onClick={handleAboutClick}>About </a></li>
+
           <li>
             <FlyoutLink className="ct-top-menu-item" FlyoutContent={CategoryContent}>
               Category
             </FlyoutLink>
           </li>
-          <li><a className="ct-top-menu-item" onClick={handleContactClick}>Contact Us</a></li>
+
+          <li><Link className="ct-top-menu-item" to="/confession">Confession</Link></li>
   
           {isToken ? <ProfileInfo userInfo={userInfo} /> : (<button className="ct-top-menu-item" onClick={onLogin}>Login</button>)}
+
         </ul>
         <div className="lg:hidden flex items-center cursor-pointer px-3 sm:px-8 ml-auto">
           <svg id="ct-toggle-top-menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -208,21 +223,27 @@ const Header = ({
               className="ct-top-menu-expand"
               style={{ padding: "1rem 0" }}
             >
-              <a href="/home" className="w-full">
-                <li className="ct-top-menu-expand-item">Home</li>
-              </a>
+              <Link to="/home" className="w-full">
+                <li className="ct-top-menu-expand-item">
+                  Home
+                </li>
+              </Link>
               <a className="w-full" onClick={() => { handleAboutClick(); setIsMenuOpen(false); }}>
                 <li className="ct-top-menu-expand-item">About</li>
               </a>
-              <a href="/category/All" className="w-full">
-                <li className="ct-top-menu-expand-item">Category</li>
-              </a>
+              <Link to="/category/All" className="w-full">
+                <li className="ct-top-menu-expand-item">
+                  Category
+                </li>
+              </Link>
               <a className="w-full" onClick={() => { handleContactClick(); setIsMenuOpen(false); }}>
                 <li className="ct-top-menu-expand-item">Contact Us</li>
               </a>
-              <a href="/account" className="w-full">
-                <li className="ct-top-menu-expand-item">View Profile</li>
-              </a>
+              <Link to="/account" className="w-full">
+                <li className="ct-top-menu-expand-item">
+                  View Profile
+                </li>
+              </Link>
               {isToken ?
                 <li className="list-none w-full text-center text-red-600 p-4 hover:bg-pornhub-300 hover:text-white transition-all rounded-xl cursor-pointer" onClick={(e) => {
                   e.stopPropagation();

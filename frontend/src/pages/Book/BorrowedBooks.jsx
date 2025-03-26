@@ -47,7 +47,6 @@ const BorrowedBooks = () => {
 
   return (
     <>
-      <Header />
       <div className="container mx-auto p-6">
         <h2 className="text-2xl font-semibold mb-4">Borrowed Books List</h2>
         <div className="overflow-x-auto border border-gray-500 rounded-2xl">

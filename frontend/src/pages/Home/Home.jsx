@@ -7,37 +7,31 @@ import GameCard from "../../components/Cards/GameCard";
 import CardSlider from "../../components/Cards/CardSlider";
 import { useSearch } from "../../utils/useSearch";  // Import the custom hook
 import "../About/styles.css";
+import { getCookie } from "../../utils/getCookie";
 
 const Home = () => {
+
   const [items, setItems] = useState({ categories: [], hotBooks: [] });
   const [HotBooks, setHotBooks] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // get Inforamation user
-  const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(null);
+  const [isCookie, setIsCookie] = useState(getCookie("token"));
+    // get Inforamation user
+  const [loading, setLoading] = useState(true);
 
-  const {
-    searchQuery,
-    setSearchQuery,
-    onSearchBook,
-    handleClearSearch,
-  } = useSearch();
+  // window.location.reload();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetching categories from /home
-        const categoryResponse = await axiosInstance.get('/home');
-        if (categoryResponse.data && categoryResponse.data.categories) {
-          setCategories(categoryResponse.data.categories);
+        const response = await axiosInstance.get('/home');
+        if (response.data && response.data.categories) {
+          setCategories(response.data.categories);
         }
 
-        // Fetching books from /get-all-book
-        const bookResponse = await axiosInstance.get('/get-all-book');
-        if (bookResponse.data && bookResponse.data.stories) {
-          setHotBooks(bookResponse.data.stories);
+        if (response.data && response.data.hotBooks) {
+          setHotBooks(response.data.hotBooks);
         }
 
         setLoading(false);
@@ -48,6 +42,7 @@ const Home = () => {
     };
     fetchData();
   }, []);
+
 
   // When fetching process
   if (loading) return <div>Loading...</div>;

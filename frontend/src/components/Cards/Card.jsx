@@ -37,7 +37,7 @@ const Card = ({
               src={imageUrl}
               alt="book-cover"
               className="w-full h-full"
-              onError={(e) => (e.target.src = "./public/Lib-hub.svg")} // Fallback image
+              onError={(e) => (e.target.src = "./anhchot.png")} // Fallback image
             />
             {isHotBook && (
               <>

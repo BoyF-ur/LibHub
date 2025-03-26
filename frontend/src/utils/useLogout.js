@@ -4,11 +4,10 @@ import axiosInstance from './axiosInstance';
 
 const useLogout = () => {
   const navigate = useNavigate();
-
   const logout = async () => {
     // // localStorage.clear();
-    // res.clearCookie("token");
     const res = await axiosInstance.post("/logout");
+    
     navigate("/home");
   };
 

@@ -24,9 +24,6 @@ const Category = ({}) => {
     const [userInfo, setUserInfo] = useState(null);
     const [allBooks, setAllBooks] = useState([]);
 
-    const [filterType, setFilterType] = useState("");
-    const [searchQuery, setSearchQuery] = useState('');
-
     const [openAddEditModal, setopenAddEditModal] = useState({
         isShown: false,
         type: "add",
@@ -38,7 +35,6 @@ const Category = ({}) => {
       data: null,
     });
 
-    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState({
         title: "All",
@@ -66,10 +62,10 @@ const Category = ({}) => {
       try {
         let response = null;
         if(isCookie){
-          response = await axiosInstance.get(`/get-all-book-user?page=${page}&limit=16`);
+          response = await axiosInstance.get(`/get-all-book-user?page=${page}&limit=16&filter=${title}`);
         }
         else{
-          response = await axiosInstance.get(`/get-all-book?page=${page}&limit=16`);
+          response = await axiosInstance.get(`/get-all-book?page=${page}&limit=16&filter=${title}`);
         }
         
         if (response.data && response.data.stories) {
@@ -125,32 +121,12 @@ const Category = ({}) => {
         }
     };
 
-    const onSearchBook = async (query) => {
-        try{
-          const response = await axiosInstance.get("/search", {
-            params:{
-              query,
-            },
-          });
-          if(response.data && response.data.stories){
-            setFilterType("search");
-            setAllBooks(response.data.stories);
-          }
-      }catch(error){
-          setError("An unexpected error occurred.Please try again!")
-        }
-    }
-  
-    const handleClearSearch = () => {
-        setFilterType("");
-        getAllBooks();
-    }
-
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     isCookie && getUserInfo();
     getAllBooks(currentPage);
     return () => {};
-  }, [currentPage]);
+  }, [title, currentPage]);
 
   const fetchFilters = async () => {
     try {
@@ -187,34 +163,24 @@ const Category = ({}) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const filteredBooks = useMemo(() => {
-    if (selectedCategory.title === "All") return allBooks;
-    return allBooks.filter((book) =>
-      book.category.some(cat => cat.toLowerCase() === selectedCategory.title.toLowerCase())
-    );
-  }, [allBooks, selectedCategory]);
-
   useEffect(() => {
     if (title) {
       setSelectedCategory({ title });
     } else {
       setSelectedCategory({ title: "All" });
     }
+    setCurrentPage(1);
+    getAllBooks(1);
   }, [title]);
 
 
   return ( 
     <>
       <header>
-        <Header  
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onSearchNote={onSearchBook}
-        handleClearSearch={handleClearSearch}/>
       </header>
       <main id="main">
         <div className="inner-wrap flex flex-row justify-center pb-0">
-          <div className="relative p-4 h-fit">
+          <div className="relative p-4">
             {isScreenInRange ? (
               <>
                 {/* This is the filter button for mobile view */}
@@ -273,12 +239,12 @@ const Category = ({}) => {
             )}
           </div>
 
-          <div className="inner-category basis-3/4 max-w-[75%] pl-4 pr-4 pb-8 mt-[40px] vsm:relative vsm:top-[88px] vsm:right-[50px] sm:static">
+          <div className="inner-category basis-3/4 max-w-[60%] pl-4 pr-4 pb-8 mt-[30px] vsm:relative vsm:top-[88px] vsm:right-[50px] sm:static">
             <div className="inner-wrap c-container">
               <div>
                 {allBooks.length > 0 ? (
                             <div className="list-book flex flex-row flex-wrap gap-[50px]">
-                                {filteredBooks.map((item) => {
+                                {allBooks.map((item) => {
                                     return (
                                         <BookCard 
                                         key={item._id}

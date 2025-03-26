@@ -1,11 +1,11 @@
 // import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { validateEmail } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-const Login = () => {
+const Login = ({ setIsToken, isToken }) => {
   
   const [showPassword, setShowPassword] = useState(false);
 
@@ -37,8 +37,7 @@ const Login = () => {
         { email, password },
         { withCredentials: true } // Quan trọng! Để gửi cookie
       );
-
-      console.log(response.data);
+      setIsToken(true);
       navigate("/home");
     } catch (error) {
       if (error.response?.data?.message) {
@@ -49,7 +48,9 @@ const Login = () => {
     }
 
   };
-
+  useEffect(() => {
+      
+    }, [isToken]);
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center backdrop-blur-[2px]"
@@ -57,8 +58,8 @@ const Login = () => {
     >
       {/* Logo */}
       <div className="absolute top-4 left-4">
-        <img src="/anhchot.png" alt="Logo-lib-hub" className="w-32 h-auto mb-1" /> {/* ✅ Đường dẫn đúng */}
-      </div>
+
+        <img src="/anhchot.png" alt="Logo-lib-hub" className="w-44 h-auto mb-1" /> {/* ✅ Đường dẫn đúng */}
 
       <div className="bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg w-96">
         {/* Title */}
