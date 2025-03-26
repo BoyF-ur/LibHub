@@ -17,7 +17,9 @@ const GetUser = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [books, setBooks] = useState([]);
+
   const [favouriteBooks, setFavouriteBooks] = useState([]);
+
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const [activeSection, setActiveSection] = useState('account'); 
 
@@ -62,6 +64,8 @@ const GetUser = () => {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
+        console.log(123);
+        console.log(typeof response.data.user.phoneNumber);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -78,6 +82,39 @@ const GetUser = () => {
   const handleViewUser = () => {
     setOpenViewModal({ isShown: true });
   };
+
+
+  const getAllBooks = async () => {
+    try {
+      const response = await axiosInstance.get("/get-all-book");
+      if (response.data && response.data.stories) {
+        setAllBooks(response.data.stories);
+      }
+    } catch (error) {
+      console.log("An unexpected error occurred. Please try again");
+    }
+  }
+
+  const onSearchBook = async (query) => {
+    try {
+      const response = await axiosInstance.get("/search", {
+        params: {
+          query,
+        },
+      });
+      if (response.data && response.data.stories) {
+        setFilterType("search");
+        setAllBooks(response.data.stories);
+      }
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again!")
+    }
+  }
+
+  const handleClearSearch = () => {
+    setFilterType("");
+    getAllBooks();
+  }
 
   useEffect(() => {
     getUserInfo();
@@ -129,6 +166,14 @@ const GetUser = () => {
   return (
     <>
       <header>
+
+        <Navbar
+          userInfo={userInfo}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          onSearchNote={onSearchBook}
+          handleClearSearch={handleClearSearch} />
+
       </header>
 
       <main className="flex flex-col lg:flex-row min-h-screen">
@@ -142,7 +187,9 @@ const GetUser = () => {
       </button>
     </li>
     <li>
+
       <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => userInfo.role === "admin" ?   handleNavigation("/borrowed") : setActiveSection("borrowing")}>
+
         <i className="fas fa-book"></i>
         <span>Book in Borrowing</span>
       </button>
@@ -154,7 +201,9 @@ const GetUser = () => {
       </button>
     </li>
     <li>
-      <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => logout()}>
+
+      <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => handleNavigation('/login')}>
+
         <i className="fas fa-sign-out-alt"></i>
         <span>Logout</span>
       </button>
@@ -182,6 +231,7 @@ const GetUser = () => {
             <div className="relative flex items-start space-x-4 mb-8">
               <div className="w-72 h-72 rounded-full bg-white border-4 border-yellow-500 relative">
                 <img src={userInfo.avatar} alt="User Avatar" className="w-full min-h-full rounded-full object-cover" />
+
               </div>
             </div>
 
@@ -255,6 +305,7 @@ const GetUser = () => {
             </div>
           </div>
         )}
+
       </>
     ) : (
       <p className="text-gray-500 text-lg">Loading user information...</p>

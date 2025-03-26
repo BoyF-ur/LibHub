@@ -112,8 +112,7 @@ const Confession = () => {
               <div className="flex gap-2 mt-2 justify-end sm:justify-end vsm:items-end sm:flex-row md:flex-row vsm:flex-col">
                 <label
                   htmlFor="file-upload"
-                  className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200 transform hover:scale-105 in-ease-in duration-700 w-fit md:p-0 scr:px-4 scr:py-2 vsm:p-0"
-                >
+                  className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200 transform hover:scale-105 in-ease-in duration-700 w-fit md:p-0 scr:px-4 scr:py-2 vsm:p-0">
                   <i className="fas fa-photo-video text-green-600 vsm:text-[10px] sm:text-[16px]"></i>
                   <strong className="vsm:text-[10px] sm:text-[16px]">Photo</strong>
                 </label>
@@ -124,12 +123,24 @@ const Confession = () => {
                   onChange={handleImageChange}
                   ref={fileInputRef}
                 />
-                
+                {image && (
+                  <div className="relative mt-2">
+                    <img
+                      src={`http://localhost:8000${image}`}
+                      alt="Uploaded"
+                      className="w-full max-h-[500px] object-contain rounded-lg"
+                    />
+
+                    {/* Nút Xóa Ảnh */}
+                    
+                  </div>
+                )}
 
                 <button
                   className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200 transform hover:scale-105 in-ease-in duration-700 w-fit md:p-0 scr:px-4 scr:py-2 vsm:p-0"
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 >
+
                   <i className="fas fa-smile text-yellow-500 vsm:text-[10px] sm:text-[16px]"></i>
                   <strong className="vsm:text-[10px] sm:text-[16px]">Emoji</strong>
                 </button>

@@ -64,7 +64,9 @@ const SignUp = ({ setIsToken }) => {
         style={{ backgroundImage: "url('/library_view.png')" }} // ✅ Đường dẫn ảnh đúng
       >
         <div className="absolute top-4 left-4">
+
           <img src="/anhchot.png" alt="Logo-lib-hub" className="w-44 h-auto mb-1" /> 
+
         </div>
   
         <div className="bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg w-96">
