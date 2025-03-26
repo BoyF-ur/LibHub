@@ -134,7 +134,7 @@ const Header = ({
   }, []);
 
   return (
-    <header className="font-KumbhSans z-40 mx-2">
+    <header className="sticky top-0 font-KumbhSans z-40">
       <nav
         className="flex justify-between items-center relative py-1 font-bold drop-shadow-sm bg-slate-50 h-[90px]"
       >
