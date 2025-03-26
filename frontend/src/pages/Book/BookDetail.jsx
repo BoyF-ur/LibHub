@@ -11,7 +11,7 @@ import { getCookie } from "../../utils/getCookie";
 import Footer from "../../components/layouts/Footer";
 import Modal from 'react-modal';
 import ViewBorrow from "./ViewBorrow";
-import { transform } from "framer-motion";
+import BorrowBtn from "../../components/ui/BorrowBtn";
 
 
 const BookDetail = ({ }) => {
@@ -81,6 +81,7 @@ const BookDetail = ({ }) => {
     window.location.reload();
   };
 
+
   useEffect(() => {
     fetchBook();
     isCookie && getUserInfo();
@@ -90,7 +91,10 @@ const BookDetail = ({ }) => {
 
   return (
     <div className="">
-      <Header />
+      <header>
+        <Header />
+      </header>
+
       <div className="max-w-5xl mx-auto bg-white border border-gray-200 border-solid rounded-2xl p-6 my-5">
         <button
           className="text-gray-500 hover:text-gray-700 flex items-center mb-4"
@@ -131,19 +135,12 @@ const BookDetail = ({ }) => {
             </div>
 
             <div className="flex gap-3 mt-6">
-              {bookInfo.remainingBook > 0 ? (
-                isCookie && <button
-                  className="bg-black text-white px-4 py-2 rounded-lg hover:bg-pornhub-200 font-semibold transition"
-                  onClick={() => handleViewBook()}
-                >
-                  Borrow!
-                </button>
-              ) : (
-                <span className="bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed">
-                  Out of book
-                </span>
-              )}
-
+              <BorrowBtn
+                bookInfo={bookInfo}
+                isLoggedIn={isCookie}
+                handleViewBook={handleViewBook}
+              />
+  
               <button
                 className={`p-2 rounded-full border transition-colors duration-300 flex items-center justify-center w-10 h-10
                       ${bookInfo.isFavourite ? "bg-red-500 text-white border-red-500 hover:bg-red-600" : "bg-gray-200 text-gray-600 hover:bg-gray-300"}`}
@@ -155,7 +152,11 @@ const BookDetail = ({ }) => {
           </div>
         </div>
       </div>
-      <Footer />
+
+      <footer>
+        <Footer />
+      </footer>
+
       <ToastContainer />
       {/* Modal for borrow book */}
       <Modal

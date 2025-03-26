@@ -95,15 +95,13 @@ const About = () => {
 
   return (
     <div className="content-wrapper font-NunitoSans">
-      <header className="mb-0">
-        <Header
-          userInfo={userInfo}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          onSearchNote={onSearchBook}
-          handleClearSearch={handleClearSearch}
-        />
-      </header>
+      <Header
+        userInfo={userInfo}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        onSearchNote={onSearchBook}
+        handleClearSearch={handleClearSearch}
+      />
 
       <main className="" id='about'>
         <div className="h-[400px] z-0">
@@ -115,7 +113,7 @@ const About = () => {
           >
             <h1 className="text-white text-[80px] font-bold">About Us</h1>
             <h2 className="text-white text-2xl font-bold">
-            Connecting knowledge seekers.
+              Connecting knowledge seekers.
             </h2>
           </div>
         </div>
@@ -154,11 +152,11 @@ const About = () => {
           <div className="ct-subheadline text-center">
             <h2>Meeting Our Team</h2>
           </div>
-          <CardSlider 
-          items={members} 
-          cardType="member" 
-          type="member"
-          getKey={(item, index) => index} 
+          <CardSlider
+            items={members}
+            cardType="member"
+            type="member"
+            getKey={(item, index) => index}
           />
         </div>
       </main>
