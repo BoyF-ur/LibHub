@@ -4,7 +4,7 @@ import CardMember from "./CardMember";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { PrevArrow, NextArrow } from "../Arrow";
+import { PrevArrow, NextArrow } from "../ui/Arrow";
 const CardSlider = ({
   items,
   variant = 'category',

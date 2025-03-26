@@ -131,12 +131,12 @@ const Header = ({
 
   useEffect(() => {
     isToken && getUserInfo();
-  }, []);
+  }, []); 
 
   return (
-    <header className="sticky top-0 font-KumbhSans z-40">
+    <header className="sticky top-0 font-KumbhSans z-[969696969]">
       <nav
-        className="flex justify-between items-center relative py-1 font-bold drop-shadow-sm bg-slate-50 h-[90px]"
+        className="flex justify-between items-center relative py-1 font-bold drop-shadow-sm bg-slate-50 h-[90px] bg-opacity-95"
       >
         <div className="flex justify-start lg:basis-1/12 lg:mx-auto">
           <a
@@ -153,7 +153,7 @@ const Header = ({
 
         {/* Search Bar */}
         <div className="basis-1/2 lg:basis-5/12 relative md:flex flex-col items-center text-black text-center ml-4">
-          <SearchBar 
+          <SearchBar
             value={searchQuery}
             onChange={({ target }) => {
               setSearchQuery(target.value);

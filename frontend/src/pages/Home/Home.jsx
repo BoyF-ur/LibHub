@@ -56,15 +56,15 @@ const Home = () => {
   return (
     <>
       <div className="font-NunitoSans">
-          <Header
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            onSearchNote={onSearchBook}
-            handleClearSearch={handleClearSearch}
-          />
+        <Header
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          onSearchNote={onSearchBook}
+          handleClearSearch={handleClearSearch}
+        />
 
         <div className="rounded-lg">
-          <GameCard />
+          {/* <GameCard /> */}
         </div>
         <main className="w-full">
 
