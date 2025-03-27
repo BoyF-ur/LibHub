@@ -138,35 +138,89 @@ const GetUser = ({ }) => {
       </header>
 
       <main className="flex flex-col lg:flex-row min-h-screen">
-        <aside className="w-full lg:w-1/5 bg-white text-black p-4 rounded-lg" style={{ backgroundColor: '#f5f5f5' }} data-aos="fade-right">
-          <h2 className="text-2xl font-extrabold mb-4 text-gray-800" style={{ fontFamily: 'Poppins, sans-serif', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)' }}>✨General</h2>
-          <ul className="space-y-8">
-            <li>
-              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('account')}>
-                <i className="fas fa-user"></i>
-                <span>Account Information</span>
-              </button>
-            </li>
-            <li>
-              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => userInfo.role === "admin" ? handleNavigation("/management") : setActiveSection("borrowing")}>
-                <i className="fas fa-book"></i>
-                <span>Book in Borrowing</span>
-              </button>
-            </li>
-            <li>
-              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('favourites')}>
-                <i className="fas fa-heart"></i>
-                <span>Favourites</span>
-              </button>
-            </li>
-            <li>
-              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => logout()}>
-                <i className="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-              </button>
-            </li>
-          </ul>
-        </aside>
+      <aside className="w-full lg:w-1/5 bg-white text-black p-4 rounded-lg flex flex-col justify-between" style={{ backgroundColor: '#FAF3E0', minHeight: '100%' }} data-aos="fade-right">
+  
+  <div className="flex flex-col space-y-8">
+    <h2 className="text-2xl font-extrabold text-gray-800" style={{ fontFamily: 'Poppins, sans-serif', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)' }}>✨General</h2>
+    <ul className="space-y-6 w-full">
+      <li>
+        <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('account')}>
+          <i className="fas fa-user"></i>
+          <span>Account Information</span>
+        </button>
+      </li>
+      <li>
+        <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('borrowing')}>
+          <i className="fas fa-book"></i>
+          <span>Borrowed Books</span>
+        </button>
+      </li>
+      <li>
+        <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('favourites')}>
+          <i className="fas fa-heart"></i>
+          <span>Favourites</span>
+        </button>
+      </li>
+      <li>
+        <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => handleNavigation('/login')}>
+          <i className="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  
+  <div className="flex flex-col space-y-8 mt-12">
+  <h2 className="text-2xl font-extrabold " style={{ fontFamily: 'Poppins, sans-serif', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)' }}>✨External Links</h2>
+  <ul className="space-y-6 w-full">
+    <li>
+      <a
+        href="https://fap.fpt.edu.vn/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="animated-button bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:from-pink-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
+      >
+        <i className="fas fa-university"></i>
+        <span>FAP</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://flm.fpt.edu.vn/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="animated-button bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:from-pink-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
+      >
+        <i className="fas fa-folder-open"></i>
+        <span>FLM</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://fu-edunext.fpt.edu.vn/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="animated-button bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:from-pink-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
+      >
+        <i className="fas fa-graduation-cap"></i>
+        <span>Edunext</span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://cmshn.fpt.edu.vn/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="animated-button bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:from-pink-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
+      >
+        <i className="fas fa-laptop"></i>
+        <span>CMS</span>
+      </a>
+    </li>
+  </ul>
+</div>
+</aside>
 
         <section className="flex flex-col space-y-4 w-full flex-grow bg-yellow-500 rounded-lg shadow-lg p-4 overflow-y-auto aos-init aos-animate" style={{ minHeight: "calc(100vh - 100px)" }} data-aos="fade-up"
           data-aos-anchor-placement="top-top">
@@ -191,26 +245,49 @@ const GetUser = ({ }) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                      <input type="text" value={userInfo.fullName} className="input-field" readOnly />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                      <input type="email" value={userInfo.email} className="input-field" readOnly />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
-                      <input type="text" value={userInfo.phoneNumber} className="input-field" readOnly />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 text-sm font-bold mb-2">MSSV</label>
-                      <input type="text" value={userInfo.MSSV} className="input-field" readOnly />
-                    </div>
-                  </div>
-                </div>
-              )}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="p-4 bg-gray-100 border-2 border-yellow-500 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+    <label className="block text-gray-800 text-lg font-bold mb-2">Name</label>
+    <input
+      type="text"
+      value={userInfo.fullName}
+      className="input-field bg-white border-2 border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+      readOnly
+    />
+  </div>
+
+  <div className="p-4 bg-gray-100 border-2 border-yellow-500 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+    <label className="block text-gray-800 text-lg font-bold mb-2">Email</label>
+    <input
+      type="email"
+      value={userInfo.email}
+      className="input-field bg-white border-2 border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+      readOnly
+    />
+  </div>
+
+  <div className="p-4 bg-gray-100 border-2 border-yellow-500 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+    <label className="block text-gray-800 text-lg font-bold mb-2">Phone Number</label>
+    <input
+      type="text"
+      value={userInfo.phoneNumber}
+      className="input-field bg-white border-2 border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+      readOnly
+    />
+  </div>
+
+  <div className="p-4 bg-gray-100 border-2 border-yellow-500 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+    <label className="block text-gray-800 text-lg font-bold mb-2">MSSV</label>
+    <input
+      type="text"
+      value={userInfo.MSSV}
+      className="input-field bg-white border-2 border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+      readOnly
+    />
+    </div>
+  </div>
+</div>
+        )}
 
               {activeSection === 'borrowing' && (
                 <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full min-h-full relative section-content" data-aos="fade-up">
