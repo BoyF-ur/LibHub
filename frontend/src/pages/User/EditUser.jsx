@@ -24,7 +24,7 @@ const EditUser = ({
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
-  const updateUser = async () => {
+  const updateUser = async () => {  
     const userId = userInfo._id;
     try{
       let imageUrl = "";

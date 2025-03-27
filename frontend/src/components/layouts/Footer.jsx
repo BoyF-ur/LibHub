@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row text-center md:text-left gap-8">
             <div className="basis-1/3 ">
               <div className="flex flex-col items-center">
-                <img src="/lib-hub-logo.png" className="w-44 h-auto mb-1" />
+                <img src="/anhchot.png" className="w-44 h-auto mb-1" />
               </div>
               <div className="">
                 <p className="mb-8 md:mb-0 text-center text-[15px]"><q>Today <span className="underline decoration-sky-500/30">a reader</span>, tomorrow <span className="underline decoration-pink-500/30">a leader.</span></q> -Margaret Fuller</p>

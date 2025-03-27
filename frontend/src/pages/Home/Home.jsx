@@ -64,7 +64,7 @@ const Home = () => {
         />
 
         <div className="rounded-lg">
-          {/* <GameCard /> */}
+          <GameCard />
         </div>
         <main className="w-full">
 

@@ -91,9 +91,7 @@ const BookDetail = ({ }) => {
 
   return (
     <div className="">
-      <header>
         <Header />
-      </header>
 
       <div className="max-w-5xl mx-auto bg-white border border-gray-200 border-solid rounded-2xl p-6 my-5">
         <button
