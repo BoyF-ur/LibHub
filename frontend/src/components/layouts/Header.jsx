@@ -9,6 +9,7 @@ import { useAuthStore } from "../../pages/store/useAuthStore";
 import { getCookie } from "../../utils/getCookie";
 import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
+import SearchResult from "../../pages/Book/Search";
 
 
 const Header = ({
@@ -18,9 +19,7 @@ const Header = ({
   handleClearSearch
  }) => {
   
-
   const {checkAuth} = useAuthStore(); 
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
@@ -147,16 +146,11 @@ const Header = ({
         style={{
           position: "sticky",
           top: 0,
-
-          zIndex: 1000,
-
           backgroundColor: "white",
           boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
         }}
       >
-
-        <div className="flex p-12 items-center lg:basis-1/6 lg:mx-auto">
-
+        <div className="flex items-center lg:basis-1/6 lg:mx-auto">
           <a
             href="#"
             className="inline-flex items-center justify-center w-auto h-auto relative"
@@ -174,35 +168,32 @@ const Header = ({
             />
           </a>
         </div>
-  
-        
-        <>
+
+        {/* Search Bar */}
+        <div className="basis-1/2 lg:basis-5/12 relative md:flex flex-col items-center text-black text-center ml-4">
           <SearchBar 
             value={searchQuery}
             onChange={({ target }) => {
-              setSearchQuery(target.value);
+            setSearchQuery(target.value);
             }}
             handleSearch={handleSearch}
             onClearSearch={onClearSearch}
           />
+        </div>
 
-        </>
-      
-  
+        {/* Menu */}
         <ul id="ct-top-menu" className="basis-5 lg:basis-5/12 hidden lg:flex lg:justify-center lg:items-center lg:gap-12 text-base whitespace-nowrap ">
-          <li><a className="ct-top-menu-item" href="/home">Home</a></li>
-          <li><a className="ct-top-menu-item" onClick={handleAboutClick}>About </a></li>
-
+          <li><Link className="ct-top-menu-item" to="/home">Home</Link></li>
+          <li><Link className="ct-top-menu-item" to="/about">About </Link></li>
           <li>
             <FlyoutLink className="ct-top-menu-item" FlyoutContent={CategoryContent}>
               Category
             </FlyoutLink>
           </li>
-
           <li><Link className="ct-top-menu-item" to="/confession">Confession</Link></li>
-  
-          {isToken ? <ProfileInfo userInfo={userInfo} /> : (<button className="ct-top-menu-item" onClick={onLogin}>Login</button>)}
 
+          {/* Avatar with Dropdown */}
+          {Boolean(isToken) ? <ProfileInfo user={userInfo} /> : (<a href="/login" className="ct-top-menu-item">Login</a>)}
         </ul>
         <div className="lg:hidden flex items-center cursor-pointer px-3 sm:px-8 ml-auto">
           <svg id="ct-toggle-top-menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"

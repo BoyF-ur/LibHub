@@ -14,6 +14,7 @@ import Header from "./components/layouts/Header";
 import axiosInstance from "./utils/axiosInstance";
 import Confession from "./pages/Confession/Confession";
 import About from "./pages/About/About";
+import SearchResult from "./pages/Book/Search";
 
 const App = () => {
     const [isToken, setIsToken] = useState(getCookie("token")); 
@@ -36,7 +37,7 @@ const App = () => {
 
     const onSearchBook = async (query) => {
         try{
-          const response = await axiosInstance.get("/search", {
+          const response = await axiosInstance.get("/search-books", {
             params:{
               query,
             },
@@ -80,7 +81,7 @@ const App = () => {
                     <Route path="/about" element={<About />} />
                     <Route path="/category/:title" element={<Category />} />
                     <Route path="/book/:id" element={<BookDetail />} />
-                    <Route path="/search" element={<Search />} />
+                    <Route path="/search" element={<SearchResult />} />
                     <Route path="/borrowed" element={<BorrowedBooks />} />
                     <Route path="/confession" element={<Confession isToken={isToken}/>} />
                 </Routes>

@@ -13,6 +13,7 @@ import "./styles.css";
 import ViewBook from "./ViewBook";
 import { getCookie } from "../../utils/getCookie";
 import Pagination from "../../components/CategoryElement/Pagination";
+import SearchBar from "../../components/Input/SearchBar";
 
 const SearchResult = () => {
   const navigate = useNavigate();
@@ -56,42 +57,45 @@ const SearchResult = () => {
   };
 
   const getAllBooks = async () => {
-      try{
-          const response = await axiosInstance.get("/get-all-book");
-          if(response.data && response.data.stories){
-              setAllBooks(response.data.stories);
-          }
-      }catch(error){
-          console.log("An unexpected error occurred. Please try again");
+    try {
+      const response = await axiosInstance.get("/get-all-book");
+      if (response.data && response.data.stories) {
+        setAllBooks(response.data.stories);
       }
-  }
+    } catch (error) {
+      console.log("An unexpected error occurred. Please try again");
+    }
+  };
 
   const searchBooks = async (page, keyword) => {
     setLoading(true);
     try {
       console.log("searchBooks", page, keyword);
-      const response = await fetch(`http://localhost:8000/search-books?keyword=${keyword}&page=${page}`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
+      const response = await fetch(
+        `http://localhost:8000/search-books?keyword=${keyword}&page=${page}`,
+        {
+          method: "GET",
+          cache: "no-store",
+          headers: {
             "Content-Type": "application/json",
-        },
-    })
+          },
+        }
+      )
         .then((res) => res.json())
         .catch((error) => {
-            console.error("Error:", error);
+          console.error("Error:", error);
         });
-        console.log("response", response);
-        if (response.stories) {
-          setTotalPages(response.totalPages || 1);
-            setAllBooks(response.stories);
-        }
+      console.log("response", response);
+      if (response.stories) {
+        setTotalPages(response.totalPages || 1);
+        setAllBooks(response.stories);
+      }
     } catch (error) {
-        console.log("Error fetching search results", error);
+      console.log("Error fetching search results", error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
   const handleClearSearch = () => {
     setFilterType("");
@@ -126,8 +130,8 @@ const SearchResult = () => {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const response = await axiosInstance.get("/search", {
-          params: { query },
+        const response = await axiosInstance.get("/search-books", {
+          params: { keyword: query },
         });
         if (response.data && response.data.stories) {
           setAllBooks(response.data.stories);
@@ -145,20 +149,15 @@ const SearchResult = () => {
 
   useEffect(() => {
     if (searchQuery.trim() !== "") {
-        searchBooks(currentPage, searchQuery);
-        console.log("searchQuery", searchQuery);
-    } 
-}, [currentPage, searchQuery]);
-
-  
+      searchBooks(currentPage, searchQuery);
+      console.log("searchQuery", searchQuery);
+    }
+  }, [currentPage, searchQuery]);
 
   return (
     <>
-      <Header
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleClearSearch={handleClearSearch}
-      />
+      
+
       <div className="container mx-auto py-10">
         <div className="flex flex-row flex-wrap gap-[30px] ">
           {allBooks.length > 0 ? (

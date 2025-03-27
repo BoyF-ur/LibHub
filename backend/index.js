@@ -252,7 +252,7 @@ app.get("/get-all-book", async (req, res) => {
 });
 
 app.get("/search-books", async (req, res) => {
-    const { page = 1, limit = 7, keyword } = req.query;
+    const { page = 1, limit = 15, keyword } = req.query;
     try {
         const find = {};
         const currentPage = parseInt(page);
@@ -264,7 +264,7 @@ app.get("/search-books", async (req, res) => {
             find.title = title;
         }
         const countRecords = await Book.countDocuments(find);
-
+        
         const books = await Book.find(find)
             .limit(limit)
             .skip(skip)
@@ -556,8 +556,8 @@ app.get("/search", async (req, res) => {
       $or: [
         { title: regex },
         { titleNoDiacritics: regex },
-        { story: regex },
-        { storyNoDiacritics: regex },
+        // { story: regex },
+        // { storyNoDiacritics: regex },
       ],
     }).sort({ isFavourite: -1 });
 
@@ -727,22 +727,22 @@ app.get("/get-posts", async (req, res) => {
 });
 
 app.patch("/confession/change-status", async (req, res) => {
-     const { postId, newStatus } = req.body;
-     try {
-         // const posts = await Post.find();
-         // console.log(posts);
-         const post = await Post.findById(postId);
-         if (!post) {
-             return res.status(404).json({ message: "Post not found" });
-         }
- 
-         post.status = newStatus;
-         await post.save();
-         res.json({ message: "Post status updated successfully", post });
-     } catch (error) {
-         res.status(500).json({ error: true, message: error.message });
-     }
- });
+  const { postId, newStatus } = req.body;
+  try {
+    // const posts = await Post.find();
+    // console.log(posts);
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    post.status = newStatus;
+    await post.save();
+    res.json({ message: "Post status updated successfully", post });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+});
 
 app.listen(8000);
 module.exports = app;
