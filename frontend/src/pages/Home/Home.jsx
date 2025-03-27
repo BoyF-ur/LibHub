@@ -43,27 +43,14 @@ const Home = () => {
     fetchData();
   }, []);
 
-
-  // When fetching process
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
-  return (
-    <>
-      <div className="font-NunitoSans">
-        <header>
-          <Header
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            onSearchNote={onSearchBook}
-            handleClearSearch={handleClearSearch}
-          />
-        </header>
-
-        <div className="rounded-lg">
-          <GameCard />
-        </div>
-        <main className="w-full">
+    return(
+        <>
+          <div className="content-wrapper font-NunitoSans">
+            <header>
+            </header>
+      
+              <main className="">
+              <div className=""></div>
 
           <div className="bg-gray-100 h-auto w-full">
             <div className="p-5 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-5 ">

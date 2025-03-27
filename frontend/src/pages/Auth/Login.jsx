@@ -123,6 +123,7 @@ const Login = ({ setIsToken, isToken }) => {
         </p>
       </div>
     </div>
+  </div>
   )
 }
 
