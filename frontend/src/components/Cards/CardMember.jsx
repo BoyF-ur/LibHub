@@ -16,7 +16,7 @@ const CardMember = ({ name, role, imageUrl, quote, linktoFacebook, linktoIntasgr
             src={imageUrl}
             alt="member-image"
             className="w-full h-full object-cover"
-            onError={(e) => (e.target.src = "./public/Lib-hub.svg")} // Fallback image
+            onError={(e) => (e.target.src = "./anhchot.png")} // Fallback image
           />
         </div>
 

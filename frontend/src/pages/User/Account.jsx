@@ -10,17 +10,17 @@ import ViewUser from "./ViewUser";
 import Modal from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
 import { Tooltip } from "react-tooltip";
+import useLogout from "../../utils/useLogout";
+import moment from "moment";
 
-const GetUser = () => {
+const GetUser = ({ }) => {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
-  const [allBooks, setAllBooks] = useState([]);
-  const [filterType, setFilterType] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [books, setBooks] = useState([]);
+  const [favouriteBooks, setFavouriteBooks] = useState([]);
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const [activeSection, setActiveSection] = useState('account');
+  const [userInfo, setUserInfo] = useState(null);
 
   const [openAddEditModal, setopenAddEditModal] = useState({
     isShown: false,
@@ -33,11 +33,12 @@ const GetUser = () => {
     data: null,
   });
 
-  const getBorrowedBooks = async () => {
+
+  const getBorrowedBooks = async (userId) => {
     try {
-      const response = await axiosInstance.get("/get-borrowed-book");
-      if (response.data && response.data.borrowedById) {
-        setBooks(response.data.borrowedById);
+      const response = await axiosInstance.get(`/get-borrowed-book/${userId}`);
+      if (response.data && response.data.borrowed) {
+        setBooks(response.data.borrowed);
       }
     } catch (error) {
       console.error("An unexpected error occurred. Please try again", error);
@@ -49,16 +50,28 @@ const GetUser = () => {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
-        console.log(123);
-        console.log(typeof response.data.user.phoneNumber);
+        getBorrowedBooks(response.data.user._id);
       }
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.clear();
-        navigate("/home");
+      if (error.response.status === 401) {
+        rage.clear();
       }
     }
   };
+
+  const getFavouriteBooks = async () => {
+    try {
+      let response = null;
+      response = await axiosInstance.get("/get-favourite-books-user");
+      if (response.data && response.data.favouriteBooks) {
+        setFavouriteBooks(response.data.favouriteBooks);
+      }
+    } catch (error) {
+      console.log("An unexpected error occurred. Please try again");
+    }
+  }
+
+  const logout = useLogout();
 
   const handleEdit = () => {
     setopenAddEditModal({ isShown: true, type: "edit", data: userInfo });
@@ -68,41 +81,8 @@ const GetUser = () => {
     setOpenViewModal({ isShown: true });
   };
 
-  const getAllBooks = async () => {
-    try {
-      const response = await axiosInstance.get("/get-all-book");
-      if (response.data && response.data.stories) {
-        setAllBooks(response.data.stories);
-      }
-    } catch (error) {
-      console.log("An unexpected error occurred. Please try again");
-    }
-  }
-
-  const onSearchBook = async (query) => {
-    try {
-      const response = await axiosInstance.get("/search", {
-        params: {
-          query,
-        },
-      });
-      if (response.data && response.data.stories) {
-        setFilterType("search");
-        setAllBooks(response.data.stories);
-      }
-    } catch (error) {
-      setError("An unexpected error occurred. Please try again!")
-    }
-  }
-
-  const handleClearSearch = () => {
-    setFilterType("");
-    getAllBooks();
-  }
-
   useEffect(() => {
     getUserInfo();
-    getBorrowedBooks();
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',
@@ -111,6 +91,12 @@ const GetUser = () => {
       mirror: false,
     });
   }, []);
+
+  useEffect(() => {
+    if (userInfo && userInfo._id) {
+      getFavouriteBooks();
+    }
+  }, [userInfo]);
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
@@ -147,110 +133,61 @@ const GetUser = () => {
   };
 
   return (
-    <div className="font-NunitoSans">
+    <>
       <header>
-        <Navbar
-          userInfo={userInfo}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          onSearchNote={onSearchBook}
-          handleClearSearch={handleClearSearch} />
       </header>
 
       <main className="flex flex-col lg:flex-row min-h-screen">
-        <aside className="w-full lg:w-1/5 text-black px-3 py-3 rounded-lg bg-gray-50 ">
-          <h2 className="text-3xl font-extrabold mb-4 text-gray-800 flex justify-center">Menu</h2>
-          <ul className="flex flex-col space-y-5">
-            <li className="">
-              <button className="ct-button-sidebar-account-page justify-start w-full" onClick={() => setActiveSection('account')}>
+        <aside className="w-full lg:w-1/5 bg-white text-black p-4 rounded-lg" style={{ backgroundColor: '#f5f5f5' }} data-aos="fade-right">
+          <h2 className="text-2xl font-extrabold mb-4 text-gray-800" style={{ fontFamily: 'Poppins, sans-serif', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)' }}>✨General</h2>
+          <ul className="space-y-8">
+            <li>
+              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('account')}>
                 <i className="fas fa-user"></i>
-                <span>My Information</span>
+                <span>Account Information</span>
               </button>
             </li>
             <li>
-              <button className="ct-button-sidebar-account-page justify-start" onClick={() => setActiveSection('borrowing')}>
+              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => userInfo.role === "admin" ? handleNavigation("/management") : setActiveSection("borrowing")}>
                 <i className="fas fa-book"></i>
-                <span>Borrowed Book</span>
+                <span>Book in Borrowing</span>
               </button>
             </li>
             <li>
-              <button className="ct-button-sidebar-account-page justify-start" onClick={() => setActiveSection('favourites')}>
+              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => setActiveSection('favourites')}>
                 <i className="fas fa-heart"></i>
                 <span>Favourites</span>
               </button>
             </li>
             <li>
-              <button className="ct-button-sidebar-account-page justify-start" onClick={() => handleNavigation('/login')}>
+              <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => logout()}>
                 <i className="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
               </button>
             </li>
           </ul>
         </aside>
-        {/*End Menu sidebar */}
 
-        <section className="flex flex-col space-y-4 w-full flex-grow bg-gray-150 rounded-lg p-4 overflow-y-auto aos-init aos-animate" style={{ minHeight: "calc(100vh - 100px)" }} data-aos="fade-up"
+        <section className="flex flex-col space-y-4 w-full flex-grow bg-yellow-500 rounded-lg shadow-lg p-4 overflow-y-auto aos-init aos-animate" style={{ minHeight: "calc(100vh - 100px)" }} data-aos="fade-up"
           data-aos-anchor-placement="top-top">
 
           {userInfo ? (
             <>
               {activeSection === 'account' && (
-                <div className="bg-white border-black-500 rounded-lg shadow-lg p-8 w-full h-full relative section-content">
-                  <h3 className="text-4xl font-extrabold text-black mb-4">
-                    My Information
+                <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full h-full relative section-content" data-aos="fade-up">
+                  <h3 className="text-4xl font-extrabold text-yellow-500 mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    👤Account Information
                   </h3>
-                  <button className="absolute top-4 right-4 bg-teal-400 hover:bg-teal-500 duration-300 text-black font-bold py-2 px-4 rounded-full flex items-center justify-center space-x-2 "
+                  <button className="absolute top-4 right-4 bg-yellow-500 text-black font-bold py-2 px-4 rounded-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white"
                     onClick={() => handleViewUser()}
                   >
                     <i className="fas fa-cog"></i>
-                    <span>Edit Information</span>
+                    <span>Account Settings</span>
                   </button>
 
-                  <div className="relative flex flex-row gap-8 mb-8">
-                    {/* Avatar Img */}
-                    <div className="relative rounded-full w-[275px] h-[275px]">
-                      <img
-                        src={userInfo.avatar}
-                        alt="User Avatar"
-                        className="w-full h-full rounded-full object-cover border-2 border-gray-150"
-                      />
-                      {/* Camera icon */} 
-                      <div className="absolute bottom-0 left-0 w-8 h-8 bg-white rounded-full flex items-center justify-center border border-gray-300">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 text-gray-600"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M3 9a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-
-                    {/*User information*/}
-                    <div className="flex flex-col space-y-2 justify-center ">
-                      {/* Tên và nhãn */}
-                      <div className="flex items-center space-x-2">
-                        <h2 className="text-5xl font-bold text-black">{userInfo.fullName}</h2>
-                      </div>
-
-                      {/* MSSV */}
-                        <p className="text-gray-400 text-xl font-bold">Mã số sinh viên</p>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-black font-bold text-xl">{userInfo.MSSV}</span>
-                      </div>
+                  <div className="relative flex items-start space-x-4 mb-8">
+                    <div className="w-72 h-72 rounded-full bg-white border-4 border-yellow-500 relative">
+                      <img src={userInfo.avatar} alt="User Avatar" className="w-full min-h-full rounded-full object-cover" />
                     </div>
                   </div>
 
@@ -271,10 +208,6 @@ const GetUser = () => {
                       <label className="block text-gray-700 text-sm font-bold mb-2">MSSV</label>
                       <input type="text" value={userInfo.MSSV} className="input-field" readOnly />
                     </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-gray-700 text-sm font-bold mb-2">Bio</label>
-                      <textarea value={userInfo.bio || "Bio: Loving reading books"} className="textarea-field" readOnly />
-                    </div>
                   </div>
                 </div>
               )}
@@ -282,11 +215,49 @@ const GetUser = () => {
               {activeSection === 'borrowing' && (
                 <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full min-h-full relative section-content" data-aos="fade-up">
                   <h3 className="text-4xl font-extrabold text-yellow-500 mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    My Loan
+                    📚 Book in Borrowing
                   </h3>
-                  <div>
 
+                  {/* Header Row */}
+                  <div className="grid grid-cols-4 text-center font-bold text-lg bg-gray-200 py-2 rounded-t-md">
+                    <div>Book</div>
+                    <div>Start Date</div>
+                    <div>End Date</div>
+                    <div>Status</div>
+                  </div>
 
+                  {/* Book List */}
+                  <div className="inner-wrap space-y-4">
+                    {books.map((book) => (
+                      <button
+                        key={book.bookId}
+                        onClick={() => navigate(`/book/${book.bookId}`)}
+                        className="w-full hover:bg-gray-50 transition"
+                      >
+                        <div className="grid grid-cols-4 items-center text-center border border-gray-300 p-4 shadow-sm">
+                          {/* Image Column */}
+                          <div className="flex justify-center">
+                            <img
+                              src={book.imageUrl}
+                              alt={book.title}
+                              className="w-24 h-auto object-cover rounded-md border border-gray-300"
+                            />
+                          </div>
+                          {/* Start Date Column */}
+                          <div className="text-gray-700 text-lg font-semibold">
+                            {moment(book.startDate).format("DD/MM/YYYY")}
+                          </div>
+                          {/* End Date Column */}
+                          <div className="text-gray-700 text-lg font-semibold">
+                            {moment(book.endDate).format("DD/MM/YYYY")}
+                          </div>
+                          {/* Status Column */}
+                          <div className={`text-lg font-semibold ${book.status === 'pending' ? 'text-yellow-500' : 'text-green-500'}`}>
+                            {book.status === 'pending' ? 'Pending' : 'Borrowed'}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
@@ -294,10 +265,24 @@ const GetUser = () => {
               {activeSection === 'favourites' && (
                 <div className="bg-white border-4 border-black-500 rounded-lg shadow-lg p-8 w-full min-h-full relative section-content" data-aos="fade-up">
                   <h3 className="text-4xl font-extrabold text-yellow-500 mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    Favourites
+                    ❤️Favourites
                   </h3>
-                  <div>
-
+                  <div className="inner-wrap flex flex-row flex-wrap justify-start space-x-5 pb-0">
+                    {favouriteBooks.map((book) => (
+                      <button onClick={() => {
+                        navigate(`/book/${book._id}`);
+                      }}>
+                        <div key={book.bookId} className=" text-center hover:bg-gray-50">
+                          <div className="py-3 px-4">
+                            <img
+                              src={book.imageUrl}
+                              alt={book.title}
+                              className="w-24 h-auto object-cover rounded-md border border-gray-300"
+                            />
+                          </div>
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
@@ -428,7 +413,7 @@ const GetUser = () => {
       </div>
 
       <Footer />
-    </div>
+    </>
   );
 };
 

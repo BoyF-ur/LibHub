@@ -6,13 +6,12 @@ import { MdArrowBack } from "react-icons/md";
 import { TfiAgenda } from "react-icons/tfi";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaHeart } from "react-icons/fa6";
-import Header from "../../components/layouts/Header";
 import { getCookie } from "../../utils/getCookie";
 import Footer from "../../components/layouts/Footer";
 import Modal from 'react-modal';
 import ViewBorrow from "./ViewBorrow";
 import BorrowBtn from "../../components/ui/BorrowBtn";
-
+import Header from "../../components/layouts/Header";
 
 const BookDetail = ({ }) => {
   const { id } = useParams();
@@ -81,6 +80,7 @@ const BookDetail = ({ }) => {
     window.location.reload();
   };
 
+  const isLoggedIn = false; //Default log out
 
   useEffect(() => {
     fetchBook();
@@ -91,8 +91,6 @@ const BookDetail = ({ }) => {
 
   return (
     <div className="">
-        <Header />
-
       <div className="max-w-5xl mx-auto bg-white border border-gray-200 border-solid rounded-2xl p-6 my-5">
         <button
           className="text-gray-500 hover:text-gray-700 flex items-center mb-4"
@@ -168,6 +166,14 @@ const BookDetail = ({ }) => {
         }}
         appElement={document.getElementById("root")}
         className="model-box relative"
+        onAfterOpen={() => {
+          // Hidden Header when opening model
+          document.querySelector('header').style.display = 'none';
+        }}
+        onAfterClose={() => {
+          // Show again Header when opening model
+          document.querySelector('header').style.display = 'block';
+        }}
       >
         <ViewBorrow
           userInfo={userInfo}
@@ -202,7 +208,16 @@ const BookDetail = ({ }) => {
           }
         }}
         appElement={document.getElementById("root")}
+        onAfterOpen={() => {
+          // Hidden Header when opening model
+          document.querySelector('header').style.display = 'none';
+        }}
+        onAfterClose={() => {
+          // Show again Header when opening model
+          document.querySelector('header').style.display = 'block';
+        }}
       >
+        
         <div className="relative bg-white p-1 rounded-lg shadow-lg">
           <img
             src={bookInfo.imageUrl}

@@ -149,9 +149,13 @@ app.get("/home", async (req, res) => {
     // if (!isUser) {
     //     return res.sendStatus(401);
     // }
+
+    const hotBooks = await Book.find({}).sort({ favouriteCount: -1});
+
     const categories = await Category.find({});
     return res.json({
         categories: categories,
+        hotBooks,
         message: "",
     });
 });
@@ -200,48 +204,86 @@ app.post("/add-book", authenticateToken, async (req, res) => {
 
 app.get("/get-all-book-user", authenticateToken, async (req, res) => {
     const { userId } = req.user;
-    const { page = 1, limit = 16 } = req.query;
-
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 16; 
+    const filter = req.query.filter;
     try {
-        const books = await Book.find({})
-        .sort({ favouriteCount: -1})
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
+        
+        let query = {};
+        if (filter && filter !== "All") {
+            query.category = { $regex: filter, $options: "i" }; 
+        }
 
-        const totalBooks = await Book.countDocuments(); 
+        const books = await Book.find(query)
+            .sort({ }) 
+            .skip((page - 1) * limit) 
+            .limit(limit); 
+
+        const totalBooks = await Book.countDocuments(query);
         const totalPages = Math.ceil(totalBooks / limit);
 
         const user = await User.findById(userId);
 
-        const booksWithFavourite = books.map(book => {
-            const isFavourite = user.favourites.includes(book._id);
-            return { ...book.toObject(), isFavourite };
-        });
-        // console.log(books);
-        res.status(200).json({ 
+        const favouriteBooks = await Book.find({ _id: { $in: user.favourites } });
+
+        const booksWithFavourite = books.map(book => ({
+            ...book.toObject(),
+            isFavourite: user.favourites.includes(book._id),
+        }));
+
+        res.status(200).json({
             stories: booksWithFavourite,
             totalPages,
-            currentpage : Number(page),
+            currentPage: page,
+            favouriteBooks
         });
     } catch (error) {
         res.status(500).json({ error: true, message: error.message });
     }
 });
 
-app.get("/get-all-book", async (req, res) => {
-    const { page = 1, limit = 16 } = req.query;
+// Get user favourite books
+app.get("/get-favourite-books-user", authenticateToken, async (req, res) => {
+    const { userId } = req.user;
     try {
-        const books = await Book.find({}).sort({ favouriteCount: -1 })
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
 
-        const totalBooks = await Book.countDocuments(); 
+        const user = await User.findById(userId);
+
+        const favouriteBooks = await Book.find({ _id: { $in: user.favourites } });
+
+        res.status(200).json({
+            favouriteBooks
+        });
+    } catch (error) {
+        res.status(500).json({ error: true, message: error.message });
+    }
+});
+
+
+app.get("/get-all-book", async (req, res) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 16;
+    const filter = req.query.filter;
+
+    try {
+        let query = {};
+        if (filter && filter !== "All") {
+            query.category = { $regex: filter, $options: "i" }; 
+        }
+
+        const books = await Book.find(query)
+            .sort({ }) 
+            .skip((page - 1) * limit) 
+            .limit(limit); 
+        
+
+        const totalBooks = await Book.countDocuments(query); 
         const totalPages = Math.ceil(totalBooks / limit);
 
         res.status(200).json({
             stories: books,
             totalPages,
-            currentpage : Number(page),
+            currentpage : page,
         });
     } catch (error) {
         res.status(500).json({ error: true, message: error.message });
@@ -254,6 +296,7 @@ app.get("/get-book-user/:id", authenticateToken, async (req, res) => {
 
     try {
         const book = await Book.findById(id);
+        const borrowed = await Borrow.find({ userId : userId, bookId : id});
         if (!book) {
             return res.status(404).json({ error: true, message: "Book not found" });
         }
@@ -261,7 +304,9 @@ app.get("/get-book-user/:id", authenticateToken, async (req, res) => {
         const user = await User.findById(userId);
         const isFavourite = user.favourites.includes(book._id);
 
-        res.status(200).json({ story: { ...book.toObject(), isFavourite } });
+        const isBorrowed = borrowed.length > 0;
+
+        res.status(200).json({ story: { ...book.toObject(), isFavourite }, isBorrowed  });
     } catch (error) {
         res.status(500).json({ error: true, message: error.message });
     }
@@ -672,23 +717,40 @@ app.get("/get-posts", async (req, res) => {
     }
 });
 
-app.patch("/confession/change-status", async (req, res) => {
-     const { postId, newStatus } = req.body;
-     try {
-         // const posts = await Post.find();
-         // console.log(posts);
-         const post = await Post.findById(postId);
-         if (!post) {
-             return res.status(404).json({ message: "Post not found" });
-         }
- 
-         post.status = newStatus;
-         await post.save();
-         res.json({ message: "Post status updated successfully", post });
-     } catch (error) {
-         res.status(500).json({ error: true, message: error.message });
-     }
- });
+app.delete("/delete-post/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ error: true, message: "Bài đăng không tồn tại" });
+        }
+
+        await Post.findByIdAndDelete(id);
+
+        res.status(200).json({ success: true, message: "Xóa bài đăng thành công" });
+    } catch (error) {
+        res.status(500).json({ error: true, message: error.message });
+    }
+});
+
+app.patch("/approve-post/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ error: true, message: "Bài đăng không tồn tại" });
+        }
+
+        post.status = "true";
+        await post.save();
+
+        res.status(200).json({ success: true, message: "Phê duyệt đăng thành công" });
+    } catch (error) {
+        res.status(500).json({ error: true, message: error.message });
+    }
+});
 
 app.listen(8000);
 module.exports = app;

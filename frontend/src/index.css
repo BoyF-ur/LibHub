@@ -15,6 +15,14 @@
     --rdp-selected-font: bold medium var(--rdp-font-family);
   }
 
+  .game-placeholder {
+    height: 600px; 
+    width: 100%;
+    background: transparent;
+    position: relative; 
+    z-index: 0; 
+  }
+
   input[type="password"]::-ms-reveal,
   input[type="password"]::-webkit-credentials-auto-fill-button {
       display: none;
@@ -114,7 +122,5 @@
 .ct-effect-icon {
   @apply text-black hover:text-pornhub-200 transition duration-300 border rounded-full w-9 h-9 flex justify-center items-center;
 }
-.ct-button-sidebar-account-page {
-  @apply hover:bg-gray-200 hover:text-pornhub-200 text-black font-bold py-2 px-2  w-full flex items-center space-x-2 transition ease-in-out rounded-md text-lg;
-}
+
 

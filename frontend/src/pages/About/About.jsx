@@ -32,17 +32,17 @@ const About = () => {
   //Data members
   const members = [
     {
-      imageUrl: "./public/Members/nguyen-hiep-store.jpg",
+      imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Đặng Cường",
       role: "Leader & Frontend Developer",
-      quote: "Suc cheo khong",
+      quote: "Chao",
       tagline: "Sục",
       linktoFacebook: "https://www.facebook.com/caocuong.dang.7524",
       linktoIntasgram: "#",
       linktoEmail: "mailto:nguyen.hiep@example.com",
     },
     {
-      imageUrl: "./public/Members/nguyen-hiep-store.jpg",
+      imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Nguyễn Dũng",
       role: "Tech Lead & Backend Developer",
       quote: "Hat dau nho",
@@ -52,7 +52,7 @@ const About = () => {
       linktoEmail: "mailto:tran.anh@example.com",
     },
     {
-      imageUrl: "./public/Members/nguyen-hiep-store.jpg",
+      imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Nguyễn Hiệp",
       role: "Backend Developer",
       quote: "Boy phố làm bố các em",
@@ -62,7 +62,7 @@ const About = () => {
       linktoEmail: "mailto:tran.anh@example.com",
     },
     {
-      imageUrl: "./public/Members/nguyen-hiep-store.jpg",
+      imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Quốc Anh",
       role: "Frontend Developer",
       quote: "dang code",
@@ -72,17 +72,17 @@ const About = () => {
       linktoEmail: "mailto:tran.anh@example.com",
     },
     {
-      imageUrl: "./public/Members/nguyen-hiep-store.jpg",
+      imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Hoàng Thảo",
       role: "Frontend Developer",
-      quote: "Cac",
+      quote: "Cac ban",
       tagline: "Gay",
       linktoFacebook: "https://www.facebook.com/kingkind.k6",
       linktoIntasgram: "https://instagram.com/",
       linktoEmail: "mailto:tran.anh@example.com",
     },
     {
-      imageUrl: "./public/Members/nguyen-hiep-store.jpg",
+      imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Lưu Kiên",
       role: "Frontend Developer",
       quote: "Deo hieu code",
@@ -95,20 +95,15 @@ const About = () => {
 
   return (
     <div className="content-wrapper font-NunitoSans">
-      <Header
-        userInfo={userInfo}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onSearchNote={onSearchBook}
-        handleClearSearch={handleClearSearch}
-      />
+      <header className="mb-0">
+      </header>
 
       <main className="" id='about'>
         <div className="h-[400px] z-0">
           <div
             className="flex flex-col items-center justify-center top-0 bottom-0 bg-slate-500 w-full h-[400px] bg-center bg-no-repeat bg-cover"
             style={{
-              backgroundImage: "url('./public/bg-about-2.jpg')",
+              backgroundImage: "url('./bg-about-2.jpg')",
             }}
           >
             <h1 className="text-white text-[80px] font-bold">About Us</h1>

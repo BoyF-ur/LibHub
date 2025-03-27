@@ -14,7 +14,7 @@ const Card = ({
   //TODO: Add borrowedCount to the card
   //divied the card into two types: category and hotbook and book in category
   const isHotBook = variant === 'hotbook';
-  const cardClass = withHoverEffect ? 'cursor-pointer px-5 py-5  md:w-[85%] m-auto hover:-translate-y-3 duration-300' : 'cursor-pointer px-5 py-5';
+  const cardClass = withHoverEffect ? 'cursor-pointer px-5 py-5  md:w-[90%] m-auto hover:-translate-y-3 duration-300' : 'cursor-pointer px-5 py-5';
 
   //Function to check isHotBook / category
   const getLink = () => {
@@ -36,8 +36,8 @@ const Card = ({
             <img
               src={imageUrl}
               alt="book-cover"
-              className="w-full h-full"
-              onError={(e) => (e.target.src = "./public/Lib-hub.svg")} // Fallback image
+              className="w-full h-full object-cover"
+              onError={(e) => (e.target.src = "./anhchot.png")} // Fallback image
             />
             {isHotBook && (
               <>

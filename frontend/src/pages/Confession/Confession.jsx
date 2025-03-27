@@ -14,13 +14,15 @@ const Confession = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef(null);
   const [userId, setUserId] = useState();
+  const [role, setRole] = useState("user");
 
   const isToken = getCookie("token");
   const getUserId = async () => {
     try {
       const response = await axiosInstance.get("/get-user");
-      // console.log(response.data.user._id);
+      setRole(response.data.user.role);
       setUserId(response.data.user._id);
+      // console.log(response.data.user._id);
     } catch (error) {
       console.error("Lỗi khi lấy userId:", error);
     }
@@ -97,7 +99,6 @@ const Confession = () => {
 
   return (
     <>
-      <Header />
       <div className="flex justify-center gap-6 p-6 pb-20">
         {/* Chính giữa - Đăng bài */}
         <div className="max-w-xl flex-1 bg-white p-4 rounded-lg shadow-md overflow-auto">
@@ -125,18 +126,7 @@ const Confession = () => {
                   onChange={handleImageChange}
                   ref={fileInputRef}
                 />
-                {image && (
-                  <div className="relative mt-2">
-                    <img
-                      src={`http://localhost:8000${image}`}
-                      alt="Uploaded"
-                      className="w-full max-h-[500px] object-contain rounded-lg"
-                    />
-
-                    {/* Nút Xóa Ảnh */}
-                    
-                  </div>
-                )}
+                
 
                 <button
                   className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-200 transform hover:scale-105 in-ease-in duration-700 w-fit md:p-0 scr:px-4 scr:py-2 vsm:p-0"
@@ -181,9 +171,11 @@ const Confession = () => {
 
           {/* Hiển thị danh sách bài đăng bằng component Post */}
           <div className="max-w-2xl mx-auto mt-5">
-            {posts.map((item, index) => (
-              <Post key={index} post={item} />
-            ))}
+              {posts
+                .filter((item) => role === "admin" || item.status === "true") 
+                .map((item, index) => (
+                  <Post key={index} post={item} getPosts={getPosts} />
+                ))}
           </div>
         </div>
       </div>

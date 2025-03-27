@@ -48,7 +48,7 @@ const CardSlider = ({
   const aboutSettings = {
     className: "center",
     centerMode: true,
-    centerPadding: "150px",
+    centerPadding: "120px",
     dots: true,
     infinite: true,
     speed: 900,

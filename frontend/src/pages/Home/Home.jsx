@@ -7,23 +7,19 @@ import GameCard from "../../components/Cards/GameCard";
 import CardSlider from "../../components/Cards/CardSlider";
 import { useSearch } from "../../utils/useSearch";  // Import the custom hook
 import "../About/styles.css";
+import { getCookie } from "../../utils/getCookie";
 
 const Home = () => {
+
   const [items, setItems] = useState({ categories: [], hotBooks: [] });
   const [HotBooks, setHotBooks] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isCookie, setIsCookie] = useState(getCookie("token"));
   // get Inforamation user
-  const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const {
-    searchQuery,
-    setSearchQuery,
-    onSearchBook,
-    handleClearSearch,
-  } = useSearch();
+  // window.location.reload();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,24 +45,11 @@ const Home = () => {
     fetchData();
   }, []);
 
-  // When fetching process
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
   return (
     <>
-      <div className="font-NunitoSans">
-        <Header
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          onSearchNote={onSearchBook}
-          handleClearSearch={handleClearSearch}
-        />
+      <div className="content-wrapper font-NunitoSans">
 
-        <div className="rounded-lg">
-          <GameCard />
-        </div>
-        <main className="w-full">
+        <main className="">
 
           <div className="bg-gray-100 h-auto w-full">
             <div className="p-5 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-5 ">
