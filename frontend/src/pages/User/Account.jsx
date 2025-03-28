@@ -160,7 +160,10 @@ const GetUser = ({ }) => {
                 </button>
               </li>
               <li>
-                <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={() => handleNavigation('/login')}>
+                <button className="animated-button bg-yellow-500 text-black font-bold py-2 px-4 rounded-full w-full flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50" onClick={(e) => {
+                  logout();
+                  handleNavigation('/login');
+                }}>
                   <i className="fas fa-sign-out-alt"></i>
                   <span>Logout</span>
                 </button>
