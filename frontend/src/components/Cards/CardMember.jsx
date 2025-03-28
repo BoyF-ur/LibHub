@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardMember = ({ name, role, imageUrl, quote, linktoFacebook, linktoIntasgram, linktoEmail, tagline }) => {
+const CardMember = ({ name, role, imageUrl, quote, linktoFacebook, linktoIntasgram, linktoEmail, tagline, bulletPoints }) => {
   return (
     <div className="max-w-3xl mx-auto px-8 py-9 bg-white rounded-3xl border border-solid border-gray-150 relative">
 
@@ -44,6 +44,15 @@ const CardMember = ({ name, role, imageUrl, quote, linktoFacebook, linktoIntasgr
           <a href={linktoEmail} className="ct-effect-icon">
             <i className="fa-solid fa-envelope fa-lg"></i>
           </a>
+        </div>
+
+        {/* Right Section: Bullet Points */}
+        <div className="w-10/12 flex justify-end mt-12 absolute">
+          <ul className="list-disc text-black text-lg ">
+            {bulletPoints && bulletPoints.map((point, index) => (
+              <li key={index} className="mb-5">{point}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

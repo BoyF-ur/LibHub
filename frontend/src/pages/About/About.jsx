@@ -35,21 +35,33 @@ const About = () => {
       imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Đặng Cường",
       role: "Leader & Frontend Developer",
-      quote: "Chao",
-      tagline: "Sục",
+      quote: "#",
+      tagline: "Hài",
       linktoFacebook: "https://www.facebook.com/caocuong.dang.7524",
       linktoIntasgram: "#",
       linktoEmail: "mailto:nguyen.hiep@example.com",
+      bulletPoints: [
+        "K20 - ĐH FPT",
+        "Thành thạo: tin học văn phòng",
+        "Mục tiêu: Phun sờ tách Dev",
+        "Thích đọc sách"
+      ],
     },
     {
       imageUrl: "./Members/nguyen-hiep-store.jpg",
-      name: "Nguyễn Dũng",
+      name: "Lê Dũng",
       role: "Tech Lead & Backend Developer",
-      quote: "Hat dau nho",
+      quote: "#",
       tagline: "Hát",
       linktoFacebook: "https://www.facebook.com/hat.au.nho.983082",
       linktoIntasgram: "https://instagram.com/",
       linktoEmail: "mailto:tran.anh@example.com",
+      bulletPoints: [
+        "K20 - ĐH FPT",
+        "Thành thạo: tin học văn phòng",
+        "Mục tiêu: Phun sờ tách Dev",
+        "Thích đọc sách"
+      ],
     },
     {
       imageUrl: "./Members/nguyen-hiep-store.jpg",
@@ -60,36 +72,60 @@ const About = () => {
       linktoFacebook: "https://www.facebook.com/hieppotato",
       linktoIntasgram: "https://instagram.com/",
       linktoEmail: "mailto:tran.anh@example.com",
+      bulletPoints: [
+        "K20 - ĐH FPT",
+        "Thành thạo: tin học văn phòng",
+        "Mục tiêu: Phun sờ tách Dev",
+        "Thích đọc sách"
+      ],
     },
     {
       imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Quốc Anh",
       role: "Frontend Developer",
-      quote: "dang code",
+      quote: "#",
       tagline: "gpt",
       linktoFacebook: "https://www.facebook.com/adonis.quocanh",
       linktoIntasgram: "https://instagram.com/",
       linktoEmail: "mailto:tran.anh@example.com",
+      bulletPoints: [
+        "K20 - ĐH FPT",
+        "Thành thạo: tin học văn phòng",
+        "Mục tiêu: Phun sờ tách Dev",
+        "Thích đọc sách"
+      ],
     },
     {
       imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Hoàng Thảo",
       role: "Frontend Developer",
-      quote: "Cac ban",
+      quote: "#",
       tagline: "Gay",
       linktoFacebook: "https://www.facebook.com/kingkind.k6",
       linktoIntasgram: "https://instagram.com/",
       linktoEmail: "mailto:tran.anh@example.com",
+      bulletPoints: [
+        "K20 - ĐH FPT",
+        "Thành thạo: tin học văn phòng",
+        "Mục tiêu: Phun sờ tách Dev",
+        "Thích đọc sách"
+      ],
     },
     {
       imageUrl: "./Members/nguyen-hiep-store.jpg",
       name: "Lưu Kiên",
       role: "Frontend Developer",
-      quote: "Deo hieu code",
-      tagline: "Hít đất",
+      quote: "#",
+      tagline: "Kéo",
       linktoFacebook: "https://www.facebook.com/kienchiluu2910",
       linktoIntasgram: "https://instagram.com/",
       linktoEmail: "mailto:tran.anh@example.com",
+      bulletPoints: [
+        "K20 - ĐH FPT",
+        "Thành thạo: tin học văn phòng",
+        "Mục tiêu: Phun sờ tách Dev",
+        "Thích đọc sách"
+      ],
     },
   ];
 
@@ -103,7 +139,7 @@ const About = () => {
           <div
             className="flex flex-col items-center justify-center top-0 bottom-0 bg-slate-500 w-full h-[400px] bg-center bg-no-repeat bg-cover"
             style={{
-              backgroundImage: "url('./bg-about-2.jpg')",
+              backgroundImage: "url('./about-us-page.jpeg')",
             }}
           >
             <h1 className="text-white text-[80px] font-bold">About Us</h1>
