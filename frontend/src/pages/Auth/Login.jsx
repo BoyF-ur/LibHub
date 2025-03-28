@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Login = ({ setIsToken, isToken }) => {
-
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
@@ -30,7 +29,6 @@ const Login = ({ setIsToken, isToken }) => {
 
     setError("");
 
-
     try {
       const response = await axiosInstance.post(
         "/login",
@@ -46,15 +44,12 @@ const Login = ({ setIsToken, isToken }) => {
         setError("An unexpected error occurred. Please try again.");
       }
     }
-
   };
-  useEffect(() => {
-
-  }, [isToken]);
+  useEffect(() => {}, [isToken]);
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center backdrop-blur-[2px]"
-      style={{ backgroundImage: "url('/library_view.png')" }} // ✅ Đường dẫn ảnh đúng
+      style={{ backgroundImage: "url('/library_view.png')" }}
     >
       {/* Logo */}
       <div className="absolute top-4 left-4">
