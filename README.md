@@ -19,7 +19,7 @@
 | **Lê Bá Dũng** | Tech Lead & Backend | Quyết định công nghệ, quản lý tiến độ, kết nối hệ thống |
 | **Nguyễn Trọng Hiệp** | Backend Dev | Code backend chính, phát triển game mô phỏng |
 | **Phạm Quốc Anh** | Frontend Dev | Thiết kế Account, Logo, hỗ trợ UI |
-| **Nguyễn Hoàng Thảo** | Frontend Dev | Category, Search, Responsive |
+| **Nguyễn Hoàng Thảo** | FullStack Dev | Category, Search, Responsive, REST API |
 | **Lưu Chí Kiên** | Frontend Dev | Home, Layout tổng thể |
 
 ### 🎯 Mentor & Support
